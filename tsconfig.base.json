@@ -14,7 +14,9 @@
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
-    "paths": {}
+    "paths": {
+      "@aait/aait/feature-shell": ["libs/aait/feature-shell/src/index.ts"]
+    }
   },
   "exclude": ["node_modules", "tmp"]
 }
