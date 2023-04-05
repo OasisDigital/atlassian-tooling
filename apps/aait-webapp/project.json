@@ -51,6 +51,9 @@
     },
     "serve": {
       "executor": "@angular-devkit/build-angular:dev-server",
+      "options": {
+        "disableHostCheck": true
+      },
       "configurations": {
         "production": {
           "browserTarget": "aait-webapp:build:production"
