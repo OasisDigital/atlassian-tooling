@@ -1,7 +1,9 @@
 import { CommonModule } from '@angular/common';
 import { Component } from '@angular/core';
 import { RouterOutlet } from '@angular/router';
+import { Observable } from 'rxjs';
 
+import { ApRequestService, ApService } from '@aait/data-access-jira';
 @Component({
   selector: 'aait-aait-feature-shell',
   standalone: true,
@@ -10,11 +12,13 @@ import { RouterOutlet } from '@angular/router';
   styleUrls: ['./aait-feature-shell.component.scss'],
 })
 export class AaitFeatureShellComponent {
-  someAPIData = 'bar';
+  timezone: Observable<string>;
+  token: Observable<string>;
+  someApiData: any;
 
-  // constructor(http: HttpClient) {
-  // http
-  //   .get<string>('https://oasis-expium-aait.atlassian.net/rest/api/3/users')
-  //   .subscribe((data) => (this.someAPIData = data));
-  // }
+  constructor(apRequest: ApRequestService, ap: ApService) {
+    this.timezone = ap.getTimeZone();
+    this.token = ap.getToken();
+    this.someApiData = apRequest.get('/rest/api/3/issue/TP-1');
+  }
 }

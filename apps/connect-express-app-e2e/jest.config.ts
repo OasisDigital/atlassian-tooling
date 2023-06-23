@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'sample-express-e2e',
+  displayName: 'connect-express-app-e2e',
   preset: '../../jest.preset.js',
   globals: {
     'ts-jest': {
@@ -15,5 +15,5 @@ export default {
     '^.+\\.[tj]s$': 'ts-jest',
   },
   moduleFileExtensions: ['ts', 'js', 'html'],
-  coverageDirectory: '../../coverage/sample-express-e2e',
+  coverageDirectory: '../../coverage/connect-express-app-e2e',
 };

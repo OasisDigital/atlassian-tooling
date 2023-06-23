@@ -1,25 +1,26 @@
 {
-  "name": "aait-webapp",
+  "name": "aait-web-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "projectType": "application",
-  "sourceRoot": "apps/aait-webapp/src",
+  "sourceRoot": "apps/aait-web-app/src",
   "prefix": "aait",
   "targets": {
     "build": {
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "outputPath": "dist/apps/aait-webapp",
-        "index": "apps/aait-webapp/src/index.html",
-        "main": "apps/aait-webapp/src/main.ts",
+        "baseHref": "/public/",
+        "outputPath": "dist/apps/connect-express-app/public",
+        "index": "apps/aait-web-app/src/index.html",
+        "main": "apps/aait-web-app/src/main.ts",
         "polyfills": ["zone.js"],
-        "tsConfig": "apps/aait-webapp/tsconfig.app.json",
+        "tsConfig": "apps/aait-web-app/tsconfig.app.json",
         "inlineStyleLanguage": "scss",
         "assets": [
-          "apps/aait-webapp/src/favicon.ico",
-          "apps/aait-webapp/src/assets"
+          "apps/aait-web-app/src/favicon.ico",
+          "apps/aait-web-app/src/assets"
         ],
-        "styles": ["apps/aait-webapp/src/styles.scss"],
+        "styles": ["apps/aait-web-app/src/styles.scss"],
         "scripts": []
       },
       "configurations": {
@@ -56,18 +57,32 @@
       },
       "configurations": {
         "production": {
-          "browserTarget": "aait-webapp:build:production"
+          "browserTarget": "aait-web-app:build:production"
         },
         "development": {
-          "browserTarget": "aait-webapp:build:development"
+          "browserTarget": "aait-web-app:build:development"
         }
       },
       "defaultConfiguration": "development"
     },
+    "connect-serve": {
+      "executor": "nx:run-commands",
+      "options": {
+        "commands": [
+          {
+            "command": "npx nx serve connect-express-app --output-style=stream-without-prefixes"
+          },
+          {
+            "command": "npx nx serve aait-web-app --output-style=stream-without-prefixes"
+          }
+        ],
+        "parallel": true
+      }
+    },
     "extract-i18n": {
       "executor": "@angular-devkit/build-angular:extract-i18n",
       "options": {
-        "browserTarget": "aait-webapp:build"
+        "browserTarget": "aait-web-app:build"
       }
     },
     "lint": {
@@ -75,8 +90,8 @@
       "outputs": ["{options.outputFile}"],
       "options": {
         "lintFilePatterns": [
-          "apps/aait-webapp/**/*.ts",
-          "apps/aait-webapp/**/*.html"
+          "apps/aait-web-app/**/*.ts",
+          "apps/aait-web-app/**/*.html"
         ]
       }
     },
@@ -84,7 +99,7 @@
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/aait-webapp/jest.config.ts",
+        "jestConfig": "apps/aait-web-app/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

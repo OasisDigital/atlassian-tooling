@@ -1,9 +1,9 @@
 /* eslint-disable */
 export default {
-  displayName: 'aait-webapp',
+  displayName: 'data-access-jira',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
-  coverageDirectory: '../../coverage/apps/aait-webapp',
+  coverageDirectory: '../../coverage/libs/data-access-jira',
   transform: {
     '^.+\\.(ts|mjs|js|html)$': [
       'jest-preset-angular',

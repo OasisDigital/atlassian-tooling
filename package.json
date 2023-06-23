@@ -4,7 +4,8 @@
   "license": "MIT",
   "scripts": {
     "nx": "nx",
-    "start": "nx serve aait-webapp"
+    "start": "nx connect-serve aait-web-app",
+    "build": "nx build connect-express-app; nx build aait-web-app"
   },
   "private": true,
   "devDependencies": {
@@ -57,8 +58,10 @@
     "@angular/platform-browser": "~15.2.0",
     "@angular/platform-browser-dynamic": "~15.2.0",
     "@angular/router": "~15.2.0",
+    "atlassian-connect-express": "^8.0.0",
     "axios": "^1.0.0",
     "express": "^4.18.1",
+    "http-proxy-middleware": "^2.0.6",
     "rxjs": "~7.8.0",
     "tslib": "^2.3.0",
     "zone.js": "~0.12.0"

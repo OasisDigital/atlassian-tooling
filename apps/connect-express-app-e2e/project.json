@@ -1,13 +1,13 @@
 {
-  "name": "sample-express-e2e",
+  "name": "connect-express-app-e2e",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "implicitDependencies": ["sample-express"],
+  "implicitDependencies": ["connect-express-app"],
   "targets": {
     "e2e": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{e2eProjectRoot}"],
       "options": {
-        "jestConfig": "apps/sample-express-e2e/jest.config.ts",
+        "jestConfig": "apps/connect-express-app-e2e/jest.config.ts",
         "passWithNoTests": true
       }
     },
@@ -15,7 +15,7 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/sample-express-e2e/**/*.{js,ts}"]
+        "lintFilePatterns": ["apps/connect-express-app-e2e/**/*.{js,ts}"]
       }
     }
   }

@@ -1,3 +1,5 @@
 <p>aait-feature-shell works!</p>
-<pre>{{ someAPIData | json }}</pre>
+<p>Timezone: {{ timezone | async }}</p>
+<p>Token: {{ token | async }}</p>
+<pre>Some Api Data: {{ someApiData | async | json }}</pre>
 <router-outlet></router-outlet>

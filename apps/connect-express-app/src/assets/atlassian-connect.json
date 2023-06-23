@@ -1,25 +1,28 @@
 {
-  "name": "Angular Hello World",
+  "name": "Hello World - aait express",
   "description": "Atlassian Connect app",
-  "key": "com.example.myapp",
-  "baseUrl": "https://1685-50-90-112-206.ngrok.io/",
+  "key": "com.oasisdigital.aait.express",
+  "baseUrl": "https://aeger.serveo.net",
   "scopes": ["read"],
   "vendor": {
     "name": "Example, Inc.",
     "url": "http://example.com"
   },
   "authentication": {
-    "type": "none"
+    "type": "jwt"
+  },
+  "lifecycle": {
+    "installed": "/installed"
   },
   "apiVersion": 1,
   "modules": {
     "generalPages": [
       {
-        "url": "/",
+        "url": "public/index.html",
         "key": "hello-world",
         "location": "system.top.navigation.bar",
         "name": {
-          "value": "My App Dropdown Name"
+          "value": "AAIT Drop Down Label"
         }
       }
     ]

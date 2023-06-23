@@ -1,7 +1,7 @@
 {
-  "name": "sample-express",
+  "name": "connect-express-app",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
-  "sourceRoot": "apps/sample-express/src",
+  "sourceRoot": "apps/connect-express-app/src",
   "projectType": "application",
   "targets": {
     "build": {
@@ -11,12 +11,12 @@
       "options": {
         "target": "node",
         "compiler": "tsc",
-        "outputPath": "dist/apps/sample-express",
-        "main": "apps/sample-express/src/main.ts",
-        "tsConfig": "apps/sample-express/tsconfig.app.json",
-        "assets": ["apps/sample-express/src/assets"],
+        "outputPath": "dist/apps/connect-express-app",
+        "main": "apps/connect-express-app/src/main.ts",
+        "tsConfig": "apps/connect-express-app/tsconfig.app.json",
+        "assets": ["apps/connect-express-app/src/assets"],
         "isolatedConfig": true,
-        "webpackConfig": "apps/sample-express/webpack.config.js"
+        "webpackConfig": "apps/connect-express-app/webpack.config.js"
       },
       "configurations": {
         "development": {},
@@ -27,14 +27,14 @@
       "executor": "@nrwl/js:node",
       "defaultConfiguration": "development",
       "options": {
-        "buildTarget": "sample-express:build"
+        "buildTarget": "connect-express-app:build"
       },
       "configurations": {
         "development": {
-          "buildTarget": "sample-express:build:development"
+          "buildTarget": "connect-express-app:build:development"
         },
         "production": {
-          "buildTarget": "sample-express:build:production"
+          "buildTarget": "connect-express-app:build:production"
         }
       }
     },
@@ -42,14 +42,14 @@
       "executor": "@nrwl/linter:eslint",
       "outputs": ["{options.outputFile}"],
       "options": {
-        "lintFilePatterns": ["apps/sample-express/**/*.ts"]
+        "lintFilePatterns": ["apps/connect-express-app/**/*.ts"]
       }
     },
     "test": {
       "executor": "@nrwl/jest:jest",
       "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
       "options": {
-        "jestConfig": "apps/sample-express/jest.config.ts",
+        "jestConfig": "apps/connect-express-app/jest.config.ts",
         "passWithNoTests": true
       },
       "configurations": {

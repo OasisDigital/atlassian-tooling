@@ -15,7 +15,8 @@
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@aait/aait/feature-shell": ["libs/aait/feature-shell/src/index.ts"]
+      "@aait/aait/feature-shell": ["libs/aait/feature-shell/src/index.ts"],
+      "@aait/data-access-jira": ["libs/data-access-jira/src/index.ts"]
     }
   },
   "exclude": ["node_modules", "tmp"]
