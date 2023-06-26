@@ -9,7 +9,6 @@
       "executor": "@angular-devkit/build-angular:browser",
       "outputs": ["{options.outputPath}"],
       "options": {
-        "baseHref": "/public/",
         "outputPath": "dist/apps/connect-express-app/public",
         "index": "apps/aait-web-app/src/index.html",
         "main": "apps/aait-web-app/src/main.ts",
