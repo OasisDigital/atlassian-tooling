@@ -1,21 +1,13 @@
 import {
-  HttpEvent,
-  HttpHandlerFn,
-  HttpRequest,
-  provideHttpClient,
-  withInterceptors,
-} from '@angular/common/http';
+  AaitFeatureShellComponent,
+  aaitFeatureShellRoutes,
+} from '@aait/aait/feature-shell';
+import { provideAp } from '@aait/util-ap-injector';
 import { bootstrapApplication } from '@angular/platform-browser';
 import {
   provideRouter,
   withEnabledBlockingInitialNavigation,
 } from '@angular/router';
-import { bindCallback, map, Observable, switchMap } from 'rxjs';
-
-import {
-  AaitFeatureShellComponent,
-  aaitFeatureShellRoutes,
-} from '@aait/aait/feature-shell';
 
 bootstrapApplication(AaitFeatureShellComponent, {
   providers: [
@@ -23,30 +15,6 @@ bootstrapApplication(AaitFeatureShellComponent, {
       aaitFeatureShellRoutes,
       withEnabledBlockingInitialNavigation(),
     ),
-    provideHttpClient(withInterceptors([jiraAuthInterceptor])),
+    provideAp(),
   ],
 }).catch((err) => console.error(err));
-
-// Should probably expand this type somehow
-declare let AP: {
-  context: {
-    getToken: (cb: (token: string) => void) => void;
-  };
-};
-
-// Todo: Test to see if this works, then move this somewhere else in the libs area
-//       Possibly just a `jira` top level folder that has all the "util/data-access" projects
-function jiraAuthInterceptor(
-  req: HttpRequest<unknown>,
-  next: HttpHandlerFn,
-): Observable<HttpEvent<unknown>> {
-  return bindCallback(AP.context.getToken)().pipe(
-    map((token) => {
-      console.log('token', token);
-      return req.clone({
-        headers: req.headers.set('Authorization', `JWT ${token}`),
-      });
-    }),
-    switchMap((clonedReq) => next(clonedReq)),
-  );
-}
