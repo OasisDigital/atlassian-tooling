@@ -12,7 +12,7 @@ export interface AP {
     create: (options: any) => void;
     close: (data: any) => void;
     getCustomData: (cb: (data: any) => void) => void;
-    getButton: () => any;
+    getButton: (selector: string) => any;
     disableCloseOnSubmit: () => void;
     createButton: (options: any) => any;
     isCloseOnEscape: (cb: (enabled: boolean) => void) => void;
@@ -45,4 +45,8 @@ export interface AP {
     getTimeZone: (cb: (timeZone: string) => void) => void;
   };
   request: (request: any) => Promise<any>;
+  confluence?: {
+    saveMacro: (value: unknown) => void;
+    closeMacroEditor: () => void;
+  };
 }
