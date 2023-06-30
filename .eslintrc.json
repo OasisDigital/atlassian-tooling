@@ -32,6 +32,17 @@
               {
                 "sourceTag": "type:util",
                 "onlyDependOnLibsWithTags": ["type:util"]
+              },
+              {
+                "sourceTag": "scope:atlassian-connect",
+                "onlyDependOnLibsWithTags": ["scope:atlassian-connect"]
+              },
+              {
+                "sourceTag": "scope:jira-app",
+                "onlyDependOnLibsWithTags": [
+                  "scope:jira-app",
+                  "scope:atlassian-connect"
+                ]
               }
             ]
           }

@@ -30,5 +30,5 @@
       }
     }
   },
-  "tags": []
+  "tags": ["scope:atlassian-connect", "type:util"]
 }
