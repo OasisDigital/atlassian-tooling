@@ -1,0 +1,30 @@
+{
+  "name": "Hello World - aait express",
+  "description": "Atlassian Connect app",
+  "key": "com.oasisdigital.aait.express",
+  "baseUrl": "https://aeger.serveo.net",
+  "scopes": ["read"],
+  "vendor": {
+    "name": "Example, Inc.",
+    "url": "http://example.com"
+  },
+  "authentication": {
+    "type": "jwt"
+  },
+  "lifecycle": {
+    "installed": "/installed"
+  },
+  "apiVersion": 1,
+  "modules": {
+    "generalPages": [
+      {
+        "url": "public/index.html",
+        "key": "hello-world",
+        "location": "system.top.navigation.bar",
+        "name": {
+          "value": "AAIT Drop Down Label"
+        }
+      }
+    ]
+  }
+}

@@ -1,6 +1,6 @@
 # Angular Atlassian Integration Tools
 
-## TODO List:
+## TODO List
 
 TODO:: We have installation working. We want to:
 
@@ -46,3 +46,7 @@ Update atlassian-connect.json with ngrok URL
 
 connect-express-app
 npx nx serve connect-express-app
+
+## Plugin Generator Command
+
+`npx nx generate @aait/tooling-plugin:application {name}`

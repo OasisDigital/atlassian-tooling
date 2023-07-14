@@ -17,6 +17,7 @@
     "paths": {
       "@aait/aait/feature-shell": ["libs/aait/feature-shell/src/index.ts"],
       "@aait/data-access-jira": ["libs/data-access-jira/src/index.ts"],
+      "@aait/tooling-plugin": ["libs/tooling-plugin/src/index.ts"],
       "@aait/util-ap-injector": ["libs/util-ap-injector/src/index.ts"],
       "@aait/util-atlassian-connect-api-types": [
         "libs/util-atlassian-connect-api-types/src/index.ts"
