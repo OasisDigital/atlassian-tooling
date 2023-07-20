@@ -1,4 +1,4 @@
-import { applicationGenerator as angularAppGenerator } from '@nrwl/angular/generators';
+import { applicationGenerator as angularAppGenerator } from '@nx/angular/generators';
 import {
   formatFiles,
   generateFiles,
@@ -7,8 +7,8 @@ import {
   readProjectConfiguration,
   updateProjectConfiguration,
   installPackagesTask,
-} from '@nrwl/devkit';
-import { applicationGenerator as nodeAppGenerator } from '@nrwl/node';
+} from '@nx/devkit';
+import { applicationGenerator as nodeAppGenerator } from '@nx/node';
 
 import { ToolingPluginGeneratorSchema } from './schema';
 
