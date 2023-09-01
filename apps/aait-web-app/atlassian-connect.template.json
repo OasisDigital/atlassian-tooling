@@ -1,8 +1,8 @@
 {
-  "name": "Hello World - aait express",
-  "description": "Atlassian Connect app",
-  "key": "com.oasisdigital.aait.express",
-  "baseUrl": "https://aeger.serveo.net",
+  "name": "{{TEMPLATE_NAME}}",
+  "description": "{{TEMPLATE_DESCRIPTION}}",
+  "key": "{{TEMPLATE_KEY}}",
+  "baseUrl": "{{TEMPLATE_BASE_URL}}",
   "scopes": ["read"],
   "vendor": {
     "name": "Example, Inc.",

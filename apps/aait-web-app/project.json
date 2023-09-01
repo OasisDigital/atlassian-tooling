@@ -65,17 +65,15 @@
       "defaultConfiguration": "development"
     },
     "connect-serve": {
-      "executor": "nx:run-commands",
+      "executor": "@aait/tooling-plugin:serve",
       "options": {
-        "commands": [
-          {
-            "command": "npx nx serve connect-express-app --output-style=stream-without-prefixes"
-          },
-          {
-            "command": "npx nx serve aait-web-app --output-style=stream-without-prefixes"
-          }
-        ],
-        "parallel": true
+        "serverAppName": "connect-express-app"
+      }
+    },
+    "connect-build": {
+      "executor": "@aait/tooling-plugin:build",
+      "options": {
+        "serverAppName": "connect-express-app"
       }
     },
     "extract-i18n": {

@@ -1,8 +1,8 @@
 {
-  "name": "Hello World - aait express",
-  "description": "Atlassian Connect app",
-  "key": "com.oasisdigital.aait.express",
-  "baseUrl": "https://aeger.serveo.net",
+  "name": "{{template_name}}",
+  "description": "{{template_description}}",
+  "key": "{{template_key}}",
+  "baseUrl": "{{template_base_base_url}}",
   "scopes": ["read"],
   "vendor": {
     "name": "Example, Inc.",
@@ -19,10 +19,10 @@
     "generalPages": [
       {
         "url": "public/index.html",
-        "key": "hello-world",
+        "key": "<%= fileName %>",
         "location": "system.top.navigation.bar",
         "name": {
-          "value": "AAIT Drop Down Label"
+          "value": "<%= className %>"
         }
       }
     ]

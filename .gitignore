@@ -1,5 +1,9 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
+# Generated Atlassian Connect File
+**/apps/**/src/assets/atlassian-connect.json
+**/apps/**/.env.atlassian-connect
+
 # compiled output
 dist
 tmp

@@ -23,6 +23,7 @@ app.use(
 );
 
 if (process.env.DEV_MODE) {
+  console.log('DEV MODE');
   app.use(
     '/install',
     createProxyMiddleware({
@@ -32,6 +33,7 @@ if (process.env.DEV_MODE) {
   );
   app.use('/', createProxyMiddleware({ target: 'http://localhost:4200' }));
 } else {
+  console.log('PRODUCTION MODE');
   app.use('/install', (_request, response) => {
     response.sendFile(
       path.join(__dirname, 'public/assets/atlassian-connect.json'),

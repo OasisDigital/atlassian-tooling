@@ -7,6 +7,7 @@ import {
   readProjectConfiguration,
   updateProjectConfiguration,
   installPackagesTask,
+  logger,
 } from '@nx/devkit';
 import { applicationGenerator as nodeAppGenerator } from '@nx/node';
 
@@ -21,6 +22,23 @@ import * as path from 'path';
     * Express App
     * (Update package.json eventually with required packages)
 */
+
+function updateGitIgnore(tree: Tree) {
+  if (tree.exists('.gitignore')) {
+    const entry = `# Generated Atlassian Connect File
+**/assets/atlassian-connect.json`;
+
+    let content = tree.read('.gitignore', 'utf-8') ?? '';
+    if (/\*\*\/assets\/atlassian-connect\.json/gm.test(content)) {
+      return;
+    }
+
+    content = `${content}\n${entry}\n`;
+    tree.write('.gitignore', content);
+  } else {
+    logger.warn(`Couldn't find .gitignore file to update`);
+  }
+}
 
 export default async function (
   tree: Tree,
@@ -39,7 +57,7 @@ export default async function (
   generateFiles(
     tree,
     path.join(__dirname, 'files', 'angular'),
-    path.join('apps', angularProjectName, 'src'),
+    path.join('apps', angularProjectName),
     {
       tmpl: '',
       ...nameOptions,
@@ -88,6 +106,7 @@ export default async function (
     updateProjectConfiguration(tree, angularProjectName, angularProjectConfig);
   }
 
+  updateGitIgnore(tree);
   installPackagesTask(tree);
 
   await formatFiles(tree);
