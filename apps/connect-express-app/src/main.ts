@@ -2,7 +2,7 @@ import express from 'express';
 import { createProxyMiddleware } from 'http-proxy-middleware';
 
 import { EventEmitter } from 'events';
-import * as path from 'path';
+import { join } from 'path/posix';
 
 const app = express();
 
@@ -35,11 +35,9 @@ if (process.env.DEV_MODE) {
 } else {
   console.log('PRODUCTION MODE');
   app.use('/install', (_request, response) => {
-    response.sendFile(
-      path.join(__dirname, 'public/assets/atlassian-connect.json'),
-    );
+    response.sendFile(join(__dirname, 'public/assets/atlassian-connect.json'));
   });
-  app.use('/', express.static(path.join(__dirname, 'public')));
+  app.use('/', express.static(join(__dirname, 'public')));
 }
 
 const port = process.env.PORT || 3333;
