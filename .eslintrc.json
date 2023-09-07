@@ -1,8 +1,13 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx", "eslint-plugin-import"],
+  "plugins": ["@nx"],
   "overrides": [
+    {
+      "files": "*.json",
+      "parser": "jsonc-eslint-parser",
+      "rules": {}
+    },
     {
       "files": ["*.ts", "*.tsx", "*.js", "*.jsx"],
       "rules": {
@@ -13,61 +18,10 @@
             "allow": [],
             "depConstraints": [
               {
-                "sourceTag": "type:feature",
-                "onlyDependOnLibsWithTags": [
-                  "type:feature",
-                  "type:ui",
-                  "type:data-access",
-                  "type:util"
-                ]
-              },
-              {
-                "sourceTag": "type:data-access",
-                "onlyDependOnLibsWithTags": ["type:data-access", "type:util"]
-              },
-              {
-                "sourceTag": "type:ui",
-                "onlyDependOnLibsWithTags": ["type:ui", "type:util"]
-              },
-              {
-                "sourceTag": "type:util",
-                "onlyDependOnLibsWithTags": ["type:util"]
-              },
-              {
-                "sourceTag": "scope:atlassian-connect",
-                "onlyDependOnLibsWithTags": ["scope:atlassian-connect"]
-              },
-              {
-                "sourceTag": "scope:jira-app",
-                "onlyDependOnLibsWithTags": [
-                  "scope:jira-app",
-                  "scope:atlassian-connect"
-                ]
+                "sourceTag": "*",
+                "onlyDependOnLibsWithTags": ["*"]
               }
             ]
-          }
-        ],
-        "import/order": [
-          "error",
-          {
-            "alphabetize": {
-              "order": "asc",
-              "caseInsensitive": true
-            },
-            "newlines-between": "always",
-            "pathGroups": [
-              {
-                "group": "external",
-                "position": "after",
-                "pattern": "[!@aait, !.**]"
-              },
-              {
-                "group": "internal",
-                "pattern": "@aait/**"
-              }
-            ],
-            "groups": ["external", "internal", "parent", "sibling", "index"],
-            "pathGroupsExcludedImportTypes": ["builtin"]
           }
         ]
       }
@@ -87,11 +41,6 @@
       "env": {
         "jest": true
       },
-      "rules": {}
-    },
-    {
-      "files": "*.json",
-      "parser": "jsonc-eslint-parser",
       "rules": {}
     }
   ]

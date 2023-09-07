@@ -1,5 +1,3 @@
 {
-  "singleQuote": true,
-  "trailingComma": "all",
-  "htmlWhitespaceSensitivity": "ignore"
+  "singleQuote": true
 }

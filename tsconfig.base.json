@@ -10,17 +10,16 @@
     "importHelpers": true,
     "target": "es2015",
     "module": "esnext",
-    "lib": ["es2017", "dom"],
+    "lib": ["es2020", "dom"],
     "skipLibCheck": true,
     "skipDefaultLibCheck": true,
     "baseUrl": ".",
     "paths": {
-      "@aait/aait/feature-shell": ["libs/aait/feature-shell/src/index.ts"],
-      "@aait/data-access-jira": ["libs/data-access-jira/src/index.ts"],
-      "@aait/tooling-plugin": ["libs/tooling-plugin/src/index.ts"],
-      "@aait/util-ap-injector": ["libs/util-ap-injector/src/index.ts"],
-      "@aait/util-atlassian-connect-api-types": [
-        "libs/util-atlassian-connect-api-types/src/index.ts"
+      "@oasisdigital/atlassian-connect-angular": [
+        "libs/atlassian-connect-angular/src/index.ts"
+      ],
+      "@oasisdigital/atlassian-connect-nx-plugin": [
+        "libs/atlassian-connect-nx-plugin/src/index.ts"
       ]
     }
   },

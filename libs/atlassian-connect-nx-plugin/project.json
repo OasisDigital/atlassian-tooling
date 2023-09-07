@@ -1,0 +1,67 @@
+{
+  "name": "atlassian-connect-nx-plugin",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "libs/atlassian-connect-nx-plugin/src",
+  "projectType": "library",
+  "targets": {
+    "build": {
+      "executor": "@nx/js:tsc",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/libs/atlassian-connect-nx-plugin",
+        "main": "libs/atlassian-connect-nx-plugin/src/index.ts",
+        "tsConfig": "libs/atlassian-connect-nx-plugin/tsconfig.lib.json",
+        "assets": [
+          "libs/atlassian-connect-nx-plugin/*.md",
+          {
+            "input": "./libs/atlassian-connect-nx-plugin/src",
+            "glob": "**/!(*.ts)",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/atlassian-connect-nx-plugin/src",
+            "glob": "**/*.d.ts",
+            "output": "./src"
+          },
+          {
+            "input": "./libs/atlassian-connect-nx-plugin",
+            "glob": "generators.json",
+            "output": "."
+          },
+          {
+            "input": "./libs/atlassian-connect-nx-plugin",
+            "glob": "executors.json",
+            "output": "."
+          }
+        ]
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "libs/atlassian-connect-nx-plugin/**/*.ts",
+          "libs/atlassian-connect-nx-plugin/package.json",
+          "libs/atlassian-connect-nx-plugin/generators.json",
+          "libs/atlassian-connect-nx-plugin/executors.json"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "libs/atlassian-connect-nx-plugin/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

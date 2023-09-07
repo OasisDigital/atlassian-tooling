@@ -1,0 +1,30 @@
+{
+  "name": "{{template_name}}",
+  "description": "{{template_description}}",
+  "key": "{{template_key}}",
+  "baseUrl": "{{template_base_base_url}}",
+  "scopes": ["read"],
+  "vendor": {
+    "name": "Example, Inc.",
+    "url": "http://example.com"
+  },
+  "authentication": {
+    "type": "jwt"
+  },
+  "lifecycle": {
+    "installed": "/installed"
+  },
+  "apiVersion": 1,
+  "modules": {
+    "generalPages": [
+      {
+        "url": "public/index.html",
+        "key": "example-app",
+        "location": "system.top.navigation.bar",
+        "name": {
+          "value": "ExampleApp"
+        }
+      }
+    ]
+  }
+}

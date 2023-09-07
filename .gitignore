@@ -1,9 +1,5 @@
 # See http://help.github.com/ignore-files/ for more about ignoring files.
 
-# Generated Atlassian Connect File
-**/apps/**/src/assets/atlassian-connect.json
-**/apps/**/.env.atlassian-connect
-
 # compiled output
 dist
 tmp
@@ -14,7 +10,6 @@ node_modules
 
 # IDEs and editors
 /.idea
-*.iml
 .project
 .classpath
 .c9/
@@ -44,3 +39,6 @@ testem.log
 Thumbs.db
 
 .angular
+
+# Generated Atlassian Connect File
+**/assets/atlassian-connect.json
