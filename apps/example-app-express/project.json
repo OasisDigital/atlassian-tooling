@@ -5,35 +5,22 @@
   "projectType": "application",
   "targets": {
     "build": {
-      "executor": "@nx/esbuild:esbuild",
+      "executor": "@nx/webpack:webpack",
       "outputs": ["{options.outputPath}"],
       "defaultConfiguration": "production",
       "options": {
-        "platform": "node",
+        "target": "node",
+        "compiler": "tsc",
         "outputPath": "dist/apps/example-app-express",
-        "format": ["cjs"],
-        "bundle": false,
         "main": "apps/example-app-express/src/main.ts",
         "tsConfig": "apps/example-app-express/tsconfig.app.json",
         "assets": ["apps/example-app-express/src/assets"],
-        "generatePackageJson": true,
-        "esbuildOptions": {
-          "sourcemap": true,
-          "outExtension": {
-            ".js": ".js"
-          }
-        }
+        "isolatedConfig": true,
+        "webpackConfig": "apps/example-app-express/webpack.config.js"
       },
       "configurations": {
         "development": {},
-        "production": {
-          "esbuildOptions": {
-            "sourcemap": false,
-            "outExtension": {
-              ".js": ".js"
-            }
-          }
-        }
+        "production": {}
       }
     },
     "serve": {

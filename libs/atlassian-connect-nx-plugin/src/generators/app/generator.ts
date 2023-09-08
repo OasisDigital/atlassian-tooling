@@ -8,7 +8,7 @@ import {
   updateProjectConfiguration,
   logger,
 } from '@nx/devkit';
-import { applicationGenerator as nodeAppGenerator } from '@nx/node';
+import { applicationGenerator as expressAppGenerator } from '@nx/express';
 
 import { AppGeneratorSchema } from './schema';
 
@@ -81,10 +81,9 @@ export default async function (tree: Tree, options: AppGeneratorSchema) {
 
   updateIndexHtmlFile(tree, angularAppProjectConfig.sourceRoot);
 
-  await nodeAppGenerator(tree, {
+  await expressAppGenerator(tree, {
     name: expressProjectName,
-    framework: 'express',
-  });
+  } as any);
 
   const expressAppProjectConfig = readProjectConfiguration(
     tree,
