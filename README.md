@@ -1,6 +1,6 @@
-# Oasisdigital Atlassian Tooling
+# Oasis Digital Atlassian Tooling
 
-This repo publishes npm packages related to Oasisdigital's custom tooling of Atlassian's Forge & Connect application systems.
+This repo publishes npm packages related to Oasis Digital's custom tooling of Atlassian's Forge & Connect application systems.
 
 The primary focus of the packages is to create a easier setup flow for developers wanting to work with Nx, Angular, and Express (only with Connect) against Atlassian's application systems & APIs.
 
