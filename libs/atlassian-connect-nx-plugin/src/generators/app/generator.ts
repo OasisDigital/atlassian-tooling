@@ -6,18 +6,14 @@ import {
   Tree,
   readProjectConfiguration,
   updateProjectConfiguration,
-  installPackagesTask,
   logger,
-  addDependenciesToPackageJson,
-  getDependentPackagesForProject,
-  readJson,
 } from '@nx/devkit';
 import { applicationGenerator as nodeAppGenerator } from '@nx/node';
 
 import { AppGeneratorSchema } from './schema';
 
-import * as path from 'path';
-import { readModulePackageJson } from 'nx/src/utils/package-json';
+import { join } from 'path/posix';
+import { initGenerator } from '../init/generator';
 
 /*
   We are creating:
@@ -26,13 +22,10 @@ import { readModulePackageJson } from 'nx/src/utils/package-json';
     * (Update package.json eventually with required packages)
 */
 
-function updateGitIgnore(tree: Tree) {
+function updateGitIgnore(tree: Tree, entry: string, regexTest: RegExp) {
   if (tree.exists('.gitignore')) {
-    const entry = `# Generated Atlassian Connect File
-**/assets/atlassian-connect.json`;
-
     let content = tree.read('.gitignore', 'utf-8') ?? '';
-    if (/\*\*\/assets\/atlassian-connect\.json/gm.test(content)) {
+    if (regexTest.test(content)) {
       return;
     }
 
@@ -43,7 +36,23 @@ function updateGitIgnore(tree: Tree) {
   }
 }
 
+function updateIndexHtmlFile(tree: Tree, sourceRoot: string) {
+  const indexHtmlFilePath = join(sourceRoot, 'index.html');
+  if (tree.exists(indexHtmlFilePath)) {
+    const indexHtmlContents = tree.read(indexHtmlFilePath).toString();
+    const updatedIndexHtmlContents = indexHtmlContents.replace(
+      '  </head>',
+      '    <script src="https://connect-cdn.atl-paas.net/all.js" type="text/javascript" async></script>\r\n  </head>'
+    );
+    tree.write(indexHtmlFilePath, updatedIndexHtmlContents);
+  } else {
+    logger.warn(`Couldn't find index.html file to update`);
+  }
+}
+
 export default async function (tree: Tree, options: AppGeneratorSchema) {
+  (await initGenerator(tree))();
+
   const nameOptions = names(options.name);
 
   const angularProjectName = `${nameOptions.fileName}-angular`;
@@ -52,76 +61,86 @@ export default async function (tree: Tree, options: AppGeneratorSchema) {
   await angularAppGenerator(tree, {
     name: angularProjectName,
     standalone: true,
+    directory: options.directory,
   });
+
+  const angularAppProjectConfig = readProjectConfiguration(
+    tree,
+    angularProjectName
+  );
 
   generateFiles(
     tree,
-    path.join(__dirname, 'files', 'angular'),
-    path.join('apps', angularProjectName),
+    join(__dirname, 'files', 'angular'),
+    join(angularAppProjectConfig.sourceRoot, '../'),
     {
       tmpl: '',
       ...nameOptions,
     }
   );
+
+  updateIndexHtmlFile(tree, angularAppProjectConfig.sourceRoot);
 
   await nodeAppGenerator(tree, {
     name: expressProjectName,
     framework: 'express',
   });
 
+  const expressAppProjectConfig = readProjectConfiguration(
+    tree,
+    expressProjectName
+  );
+
   generateFiles(
     tree,
-    path.join(__dirname, 'files', 'express'),
-    path.join('apps', expressProjectName),
+    join(__dirname, 'files', 'express'),
+    join(expressAppProjectConfig.sourceRoot, '../'),
     {
       tmpl: '',
       ...nameOptions,
     }
   );
 
-  const angularProjectConfig = readProjectConfiguration(
-    tree,
-    angularProjectName
-  );
-
-  if (angularProjectConfig.targets) {
-    angularProjectConfig.targets['connect-serve'] = {
+  if (angularAppProjectConfig.targets) {
+    angularAppProjectConfig.targets['connect-serve'] = {
       executor: '@oasisdigital/atlassian-connect-nx-plugin:serve',
       options: {
         serverAppName: expressProjectName,
       },
     };
-    angularProjectConfig.targets['connect-build'] = {
+    angularAppProjectConfig.targets['connect-build'] = {
       executor: '@oasisdigital/atlassian-connect-nx-plugin:build',
       options: {
         serverAppName: expressProjectName,
       },
     };
-    angularProjectConfig.targets[
-      'build'
-    ].options.outputPath = `dist/apps/${expressProjectName}/public`;
+    angularAppProjectConfig.targets['build'].options.outputPath = join(
+      expressAppProjectConfig.targets['build'].options.outputPath,
+      '/public'
+    );
 
-    updateProjectConfiguration(tree, angularProjectName, angularProjectConfig);
+    updateProjectConfiguration(
+      tree,
+      angularProjectName,
+      angularAppProjectConfig
+    );
   }
 
-  updateGitIgnore(tree);
-
-  const packageJson = readJson(tree, 'package.json');
-
-  const version =
-    packageJson.devDependencies['@oasisdigital/atlassian-connect-nx-plugin'] ??
-    packageJson.dependencies['@oasisdigital/atlassian-connect-nx-plugin'] ??
-    'latest';
-
-  addDependenciesToPackageJson(
+  const atlassianConnectJsonEntry = `# Generated Atlassian Connect File
+**/assets/atlassian-connect.json`;
+  updateGitIgnore(
     tree,
-    {
-      '@oasisdigital/atlassian-connect-angular': version,
-    },
-    {}
+    atlassianConnectJsonEntry,
+    /\*\*\/assets\/atlassian-connect\.json/gm
   );
 
-  installPackagesTask(tree);
+  const atlassianConnectEnvEntry = `# Atlassian Connect env File
+**/.env.atlassian-connect`;
+  updateGitIgnore(
+    tree,
+    atlassianConnectEnvEntry,
+    /\*\*\/\.env\.atlassian-connect/gm
+  );
 
   await formatFiles(tree);
 }

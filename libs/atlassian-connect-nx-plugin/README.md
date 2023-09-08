@@ -5,10 +5,12 @@
 ### Ngrok
 
 To install ngrok (which we use as a tunnel for Atlassian Connect to see your localhost app) run one of the following commands:
+
 `npm install -g ngrok`
+
 `yarn global add ngrok`
 
-[https://ngrok.com/docs/getting-started/#step-3-connect-your-agent-to-your-ngrok-account](Once you have installed `ngrok` globally on your device, follow "Step 3" from the `ngrok` documentation to authenticate ngrok for your device.)
+[Once you have installed `ngrok` globally on your device, follow "Step 3" from the `ngrok` documentation to authenticate ngrok for your device.](https://ngrok.com/docs/getting-started/#step-3-connect-your-agent-to-your-ngrok-account)
 
 > In the future we will try to incorporate this authentication into this package to avoid globally installing `ngrok`.
 
@@ -23,10 +25,11 @@ Run one of the following commands in a Nx workspace:
 ## Generating Your Atlassian Connect Application
 
 Run the following command to create your own Angular + Express applications to run on Atlassian Connect:
+
 `npx nx generate @oasisdigital/atlassian-connect-nx-plugin:app`
 
 Once you have generated your application you will need to fill out our Atlassian environment configuration.
-You can do this by copying the `.env.atlassian-connect.template` that was generated in your Angular application and renaming it to `.env.atlassian-connect`. Make sure to fill out the env variables in this file to match your Atlassian configuration!
+You can do this by copying the `.env.atlassian-connect.template` that was genereated in your Angular application and renaming it to `.env.atlassian-connect`. Make sure to fill out the env variables in this file to match your Atlassian configuration!
 
 ## Serving Your Application
 

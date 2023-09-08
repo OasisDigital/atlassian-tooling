@@ -1,9 +1,7 @@
 import { bootstrapApplication } from '@angular/platform-browser';
-
-import { provideAp } from '@oasisdigital/atlassian-connect-angular';
-
+import { appConfig } from './app/app.config';
 import { AppComponent } from './app/app.component';
 
-bootstrapApplication(AppComponent, {
-  providers: [provideAp()],
-}).catch((err) => console.error(err));
+bootstrapApplication(AppComponent, appConfig).catch((err) =>
+  console.error(err)
+);

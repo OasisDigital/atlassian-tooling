@@ -25,7 +25,9 @@ export default async function runServeExecutor(
   */
   await generateAtlassianConnectJson(context, ngrokUrl);
 
-  await loadEnvVars(join('apps', options.serverAppName, '.env.serve'));
+  const expressProjectRoot =
+    context.projectsConfigurations.projects[options.serverAppName].root;
+  await loadEnvVars(join(expressProjectRoot, '.env.serve'));
 
   const serverResult = await runExecutor(
     {

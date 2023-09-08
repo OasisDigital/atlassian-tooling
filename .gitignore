@@ -42,3 +42,6 @@ Thumbs.db
 
 # Generated Atlassian Connect File
 **/assets/atlassian-connect.json
+
+# Atlassian Connect env File
+**/.env.atlassian-connect

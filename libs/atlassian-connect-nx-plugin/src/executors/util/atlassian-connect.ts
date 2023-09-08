@@ -6,14 +6,16 @@ import { join } from 'path/posix';
 
 export async function generateAtlassianConnectJson(
   context: ExecutorContext,
-  ngrokUrl?: string,
+  ngrokUrl?: string
 ) {
+  const projectRoot =
+    context.projectsConfigurations.projects[context.projectName].root;
   try {
     const envConfig = await loadEnvVars(
-      join('apps', context.projectName, '.env.atlassian-connect'),
+      join(projectRoot, '.env.atlassian-connect')
     );
     const atlassianConnectTemplate = readJsonFile(
-      join('apps', context.projectName, 'atlassian-connect.template.json'),
+      join(projectRoot, 'atlassian-connect.template.json')
     );
 
     const atlassianConnectFinal = {
@@ -25,18 +27,12 @@ export async function generateAtlassianConnectJson(
     };
 
     writeJsonFile(
-      join(
-        'apps',
-        context.projectName,
-        'src',
-        'assets',
-        'atlassian-connect.json',
-      ),
-      atlassianConnectFinal,
+      join(projectRoot, 'src', 'assets', 'atlassian-connect.json'),
+      atlassianConnectFinal
     );
   } catch {
     console.error(
-      `Could not find \`.env.atlassian-connect\` for project: ${context.projectName}`,
+      `Could not find \`.env.atlassian-connect\` for project: ${context.projectName}`
     );
     process.exit(1);
   }
