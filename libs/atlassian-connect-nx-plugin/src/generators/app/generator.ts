@@ -7,6 +7,7 @@ import {
   readProjectConfiguration,
   updateProjectConfiguration,
   logger,
+  installPackagesTask,
 } from '@nx/devkit';
 import { applicationGenerator as expressAppGenerator } from '@nx/express';
 
@@ -142,4 +143,8 @@ export default async function (tree: Tree, options: AppGeneratorSchema) {
   );
 
   await formatFiles(tree);
+
+  return () => {
+    installPackagesTask(tree);
+  };
 }
