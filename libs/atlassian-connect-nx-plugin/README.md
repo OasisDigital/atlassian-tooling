@@ -24,12 +24,10 @@ Run one of the following commands in a Nx workspace:
 
 ## Generating Your Atlassian Connect Application
 
-Run the following command to create your own Angular + Express applications to run on Atlassian Connect:
+1. Run the following command to create your own Angular + Express applications to run on Atlassian Connect:  
+   `npx nx generate @oasisdigital/atlassian-connect-nx-plugin:app`
 
-`npx nx generate @oasisdigital/atlassian-connect-nx-plugin:app`
-
-Once you have generated your application you will need to fill out our Atlassian environment configuration.
-You can do this by copying the `.env.atlassian-connect.template` that was genereated in your Angular application and renaming it to `.env.atlassian-connect`. Make sure to fill out the env variables in this file to match your Atlassian configuration!
+2. Once you have generated your application you will need to fill out our Atlassian environment configuration. You can do this by copying the `.env.atlassian-connect.template` that was generated in your Angular application and renaming it to `.env.atlassian-connect`. Make sure to fill out the env variables in this file to match your Atlassian configuration!
 
 ## Serving Your Application
 
