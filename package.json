@@ -43,7 +43,7 @@
     "@nx/node": "16.8.1",
     "@nx/plugin": "^16.8.1",
     "@nx/web": "16.8.1",
-    "@nx/webpack": "16.8.0",
+    "@nx/webpack": "16.8.1",
     "@nx/workspace": "16.8.1",
     "@oasisdigital/atlassian-connect-angular": "latest",
     "@schematics/angular": "~16.2.0",
