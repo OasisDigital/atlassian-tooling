@@ -145,6 +145,6 @@ export default async function (tree: Tree, options: AppGeneratorSchema) {
   await formatFiles(tree);
 
   return () => {
-    installPackagesTask(tree);
+    installPackagesTask(tree, true);
   };
 }

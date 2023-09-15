@@ -90,7 +90,7 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
   await formatFiles(tree);
 
   return () => {
-    installPackagesTask(tree);
+    installPackagesTask(tree, true);
   };
 }
 

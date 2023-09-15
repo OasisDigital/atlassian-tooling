@@ -89,7 +89,7 @@ export async function connectMigrationGenerator(
   await formatFiles(tree);
 
   return () => {
-    installPackagesTask(tree);
+    installPackagesTask(tree, true);
   };
 }
 
