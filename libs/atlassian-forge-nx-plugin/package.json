@@ -1,11 +1,13 @@
 {
   "name": "@oasisdigital/atlassian-forge-nx-plugin",
-  "version": "0.0.5",
+  "version": "0.0.6",
   "dependencies": {
     "nx": "16.8.0",
     "@nx/devkit": "16.8.1",
     "tslib": "^2.3.0",
     "js-yaml": "^4.1.0",
+    "@types/js-yaml": "^4.0.5",
+    "@forge/cli": "latest",
     "node-html-parser": "^6.1.10"
   },
   "type": "commonjs",
