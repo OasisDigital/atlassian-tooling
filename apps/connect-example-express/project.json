@@ -1,0 +1,64 @@
+{
+  "name": "connect-example-express",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "sourceRoot": "apps/connect-example-express/src",
+  "projectType": "application",
+  "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "outputs": ["{options.outputPath}"],
+      "defaultConfiguration": "production",
+      "options": {
+        "target": "node",
+        "compiler": "tsc",
+        "outputPath": "dist/apps/connect-example-express",
+        "main": "apps/connect-example-express/src/main.ts",
+        "tsConfig": "apps/connect-example-express/tsconfig.app.json",
+        "assets": ["apps/connect-example-express/src/assets"],
+        "isolatedConfig": true,
+        "webpackConfig": "apps/connect-example-express/webpack.config.js"
+      },
+      "configurations": {
+        "development": {},
+        "production": {}
+      }
+    },
+    "serve": {
+      "executor": "@nx/js:node",
+      "defaultConfiguration": "development",
+      "options": {
+        "buildTarget": "connect-example-express:build"
+      },
+      "configurations": {
+        "development": {
+          "buildTarget": "connect-example-express:build:development"
+        },
+        "production": {
+          "buildTarget": "connect-example-express:build:production"
+        }
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": ["apps/connect-example-express/**/*.ts"]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/connect-example-express/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    }
+  },
+  "tags": []
+}

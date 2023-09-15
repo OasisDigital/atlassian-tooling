@@ -36,6 +36,9 @@ export async function initGenerator(tree: Tree) {
   const peerDeps = [
     { name: '@nx/angular', version: nxVersion },
     { name: '@nx/express', version: nxVersion },
+  ];
+
+  const deps = [
     {
       name: '@oasisdigital/atlassian-connect-angular',
       version: atlassianConnectPluginVersion,
@@ -58,6 +61,16 @@ export async function initGenerator(tree: Tree) {
           {},
           { [peerDep.name]: peerDep.version }
         )
+      );
+    }
+  });
+
+  deps.forEach((dep) => {
+    const packageVersion = getInstalledPackageVersion(tree, dep.name);
+
+    if (!packageVersion) {
+      tasks.push(
+        addDependenciesToPackageJson(tree, { [dep.name]: dep.version }, {})
       );
     }
   });

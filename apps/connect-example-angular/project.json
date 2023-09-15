@@ -1,0 +1,116 @@
+{
+  "name": "connect-example-angular",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "projectType": "application",
+  "prefix": "oasisdigital",
+  "sourceRoot": "apps/connect-example-angular/src",
+  "tags": [],
+  "targets": {
+    "build": {
+      "executor": "@angular-devkit/build-angular:browser",
+      "outputs": ["{options.outputPath}"],
+      "options": {
+        "outputPath": "dist/apps/connect-example-express/public",
+        "index": "apps/connect-example-angular/src/index.html",
+        "main": "apps/connect-example-angular/src/main.ts",
+        "polyfills": ["zone.js"],
+        "tsConfig": "apps/connect-example-angular/tsconfig.app.json",
+        "assets": [
+          "apps/connect-example-angular/src/favicon.ico",
+          "apps/connect-example-angular/src/assets"
+        ],
+        "styles": ["apps/connect-example-angular/src/styles.css"],
+        "scripts": []
+      },
+      "configurations": {
+        "forge": {
+          "outputPath": "dist/apps/connect-example-angular"
+        },
+        "production": {
+          "budgets": [
+            {
+              "type": "initial",
+              "maximumWarning": "500kb",
+              "maximumError": "1mb"
+            },
+            {
+              "type": "anyComponentStyle",
+              "maximumWarning": "2kb",
+              "maximumError": "4kb"
+            }
+          ],
+          "outputHashing": "all"
+        },
+        "development": {
+          "buildOptimizer": false,
+          "optimization": false,
+          "vendorChunk": true,
+          "extractLicenses": false,
+          "sourceMap": true,
+          "namedChunks": true
+        }
+      },
+      "defaultConfiguration": "production"
+    },
+    "serve": {
+      "executor": "@angular-devkit/build-angular:dev-server",
+      "configurations": {
+        "production": {
+          "browserTarget": "connect-example-angular:build:production"
+        },
+        "development": {
+          "browserTarget": "connect-example-angular:build:development"
+        }
+      },
+      "defaultConfiguration": "development"
+    },
+    "extract-i18n": {
+      "executor": "@angular-devkit/build-angular:extract-i18n",
+      "options": {
+        "browserTarget": "connect-example-angular:build"
+      }
+    },
+    "lint": {
+      "executor": "@nx/linter:eslint",
+      "outputs": ["{options.outputFile}"],
+      "options": {
+        "lintFilePatterns": [
+          "apps/connect-example-angular/**/*.ts",
+          "apps/connect-example-angular/**/*.html"
+        ]
+      }
+    },
+    "test": {
+      "executor": "@nx/jest:jest",
+      "outputs": ["{workspaceRoot}/coverage/{projectRoot}"],
+      "options": {
+        "jestConfig": "apps/connect-example-angular/jest.config.ts",
+        "passWithNoTests": true
+      },
+      "configurations": {
+        "ci": {
+          "ci": true,
+          "codeCoverage": true
+        }
+      }
+    },
+    "serve-static": {
+      "executor": "@nx/web:file-server",
+      "options": {
+        "buildTarget": "connect-example-angular:build"
+      }
+    },
+    "connect-serve": {
+      "executor": "@oasisdigital/atlassian-connect-nx-plugin:serve",
+      "options": {
+        "serverAppName": "connect-example-express"
+      }
+    },
+    "connect-build": {
+      "executor": "@oasisdigital/atlassian-connect-nx-plugin:build",
+      "options": {
+        "serverAppName": "connect-example-express"
+      }
+    }
+  }
+}

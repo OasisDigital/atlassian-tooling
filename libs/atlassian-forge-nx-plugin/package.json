@@ -1,13 +1,13 @@
 {
-  "name": "@oasisdigital/atlassian-connect-nx-plugin",
-  "version": "0.1.5",
+  "name": "@oasisdigital/atlassian-forge-nx-plugin",
+  "version": "0.0.1",
   "dependencies": {
-    "ngrok": "^5.0.0-beta.2",
-    "chalk": "^2.4.2",
-    "@nx/devkit": "^16.8.1",
-    "@nx/angular": "^16.8.1",
-    "@nx/express": "^16.8.1",
-    "tslib": "^2.3.0"
+    "@nx/devkit": "16.8.1",
+    "@forge/cli": "latest",
+    "tslib": "^2.3.0",
+    "js-yaml": "^4.1.0",
+    "@types/js-yaml": "^4.0.5",
+    "node-html-parser": "^6.1.10"
   },
   "type": "commonjs",
   "main": "./src/index.js",
@@ -19,8 +19,11 @@
   },
   "keywords": [
     "atlassian",
+    "forge",
+    "atlassian-forge",
     "connect",
     "atlassian-connect",
+    "migration",
     "tooling",
     "nx",
     "plugin"
@@ -37,7 +40,7 @@
     }
   ],
   "license": "MIT",
-  "homepage": "https://github.com/OasisDigital/atlassian-tooling/blob/main/libs/atlassian-connect-nx-plugin/README.md",
+  "homepage": "https://github.com/OasisDigital/atlassian-tooling/blob/main/libs/atlassian-forge-nx-plugin/README.md",
   "bugs": {
     "url": "https://github.com/OasisDigital/atlassian-tooling/issues"
   },

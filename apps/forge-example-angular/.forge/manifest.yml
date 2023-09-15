@@ -1,0 +1,15 @@
+modules:
+  jira:globalPage:
+    - key: test-app-hello-world-page
+      resource: main
+      resolver:
+        function: resolver
+      title: test-app
+  function:
+    - key: resolver
+      handler: index.handler
+resources:
+  - key: main
+    path: ../../../dist/apps/forge-example-angular
+app:
+  id: ari:cloud:ecosystem::app/402fc438-6db3-4fe2-a948-98c4152b4f2c

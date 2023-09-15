@@ -20,6 +20,9 @@
       ],
       "@oasisdigital/atlassian-connect-nx-plugin": [
         "libs/atlassian-connect-nx-plugin/src/index.ts"
+      ],
+      "@oasisdigital/atlassian-forge-nx-plugin": [
+        "libs/atlassian-forge-nx-plugin/src/index.ts"
       ]
     }
   },

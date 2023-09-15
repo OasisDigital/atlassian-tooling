@@ -1,0 +1,19 @@
+{
+  "generators": {
+    "app": {
+      "factory": "./src/generators/app/generator",
+      "schema": "./src/generators/app/schema.json",
+      "description": "app generator"
+    },
+    "init": {
+      "factory": "./src/generators/init/generator",
+      "schema": "./src/generators/init/schema.json",
+      "description": "init generator"
+    },
+    "connect-migration": {
+      "factory": "./src/generators/connect-migration/generator",
+      "schema": "./src/generators/connect-migration/schema.json",
+      "description": "connect-migration generator"
+    }
+  }
+}
