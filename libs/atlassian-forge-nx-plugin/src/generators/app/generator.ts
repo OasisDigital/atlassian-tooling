@@ -1,5 +1,6 @@
 import {
   formatFiles,
+  installPackagesTask,
   logger,
   readProjectConfiguration,
   Tree,
@@ -87,6 +88,10 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
   }
 
   await formatFiles(tree);
+
+  return () => {
+    installPackagesTask(tree);
+  };
 }
 
 export default appGenerator;

@@ -1,5 +1,6 @@
 import {
   formatFiles,
+  installPackagesTask,
   logger,
   readProjectConfiguration,
   Tree,
@@ -86,6 +87,10 @@ export async function connectMigrationGenerator(
   await appGenerator(tree, options);
 
   await formatFiles(tree);
+
+  return () => {
+    installPackagesTask(tree);
+  };
 }
 
 export default connectMigrationGenerator;
