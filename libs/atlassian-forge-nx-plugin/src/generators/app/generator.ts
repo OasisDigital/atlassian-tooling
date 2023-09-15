@@ -15,6 +15,7 @@ import initGenerator from '../init/generator';
 import { readYamlFile } from 'nx/src/utils/fileutils';
 import { dump as parseToYaml } from 'js-yaml';
 import { forgeLogin } from '../util/forge-account';
+import parse from 'node-html-parser';
 
 export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
   (await initGenerator(tree))();
@@ -48,6 +49,17 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
         directory,
         projectConfig.targets['build'].options.outputPath
       );
+      const indexHTMLFilePath = join(projectConfig.sourceRoot, 'index.html');
+      const indexHTMLContent = tree.read(indexHTMLFilePath).toString();
+
+      const parsedHTML = parse(indexHTMLContent);
+      const baseElement = parsedHTML.getElementsByTagName('base')[0];
+      if (baseElement) {
+        baseElement.setAttribute('href', '');
+        tree.write(indexHTMLFilePath, parsedHTML.toString());
+      } else {
+        logger.warn('Unable to update baseHref in `index.html`...Skipping...');
+      }
     } else {
       logger.error(
         "Unsupported application type...\r\nYou will need to manually update your `manifest.yml` with the application's dist path for the `main` resource"
