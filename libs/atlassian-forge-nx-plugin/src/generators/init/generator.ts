@@ -30,7 +30,9 @@ export async function initGenerator(tree: Tree) {
   peerDeps.forEach((pkg) => {
     const packageVersion = getInstalledPackageVersion(tree, pkg);
 
-    const version = execSync(`npm view ${pkg} version`).toString();
+    const version = execSync(`npm view ${pkg} version`)
+      .toString()
+      .replace('\n', '');
 
     if (!packageVersion) {
       try {
@@ -45,9 +47,11 @@ export async function initGenerator(tree: Tree) {
 
   deps.forEach((pkg) => {
     const packageVersion = getInstalledPackageVersion(tree, pkg);
-    const version = execSync(`npm view ${pkg} version`).toString();
+    const version = execSync(`npm view ${pkg} version`)
+      .toString()
+      .replace('\n', '');
     if (!packageVersion) {
-      tasks.push(addDependenciesToPackageJson(tree, {}, { [pkg]: version }));
+      tasks.push(addDependenciesToPackageJson(tree, { [pkg]: version }, {}));
     }
   });
 

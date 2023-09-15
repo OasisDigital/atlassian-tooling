@@ -20,7 +20,7 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
   const result = forgeLogin();
 
   if (!result) {
-    logger.info('Already logged into forge cli, skipping...');
+    logger.info('\nAlready logged into forge cli, skipping...\n');
   }
 
   const projectConfig = readProjectConfiguration(tree, options.project);

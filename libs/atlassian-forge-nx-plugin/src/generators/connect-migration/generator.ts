@@ -11,7 +11,6 @@ import { parse } from 'node-html-parser';
 import { ConnectMigrationGeneratorSchema } from './schema';
 import initGenerator from '../init/generator';
 import appGenerator from '../app/generator';
-import { forgeLogin } from '../util/forge-account';
 
 export async function connectMigrationGenerator(
   tree: Tree,
@@ -44,12 +43,25 @@ export async function connectMigrationGenerator(
       'dist',
       projectConfig.root
     );
-    updateProjectConfiguration(tree, options.project, projectConfig);
   } else {
     logger.error(
       "Unsupported application type...\r\nYou will need to manually update your `manifest.yml` with the application's dist path for the `main` resource"
     );
   }
+
+  if (projectConfig.targets?.['connect-build']) {
+    delete projectConfig.targets['connect-build'];
+  } else {
+    logger.warn('Could not find `connect-build` target, skipping removal...');
+  }
+
+  if (projectConfig.targets?.['connect-serve']) {
+    delete projectConfig.targets['connect-serve'];
+  } else {
+    logger.warn('Could not find `connect-serve` target, skipping removal...');
+  }
+
+  updateProjectConfiguration(tree, options.project, projectConfig);
 
   const appConfigFilePath = join(
     projectConfig.sourceRoot,
@@ -70,12 +82,6 @@ export async function connectMigrationGenerator(
   tree.write(appConfigFilePath, newAppConfigContents);
 
   (await initGenerator(tree))();
-
-  const result = forgeLogin();
-
-  if (!result) {
-    logger.info('Already logged into forge cli, skipping...');
-  }
 
   await appGenerator(tree, options);
 
