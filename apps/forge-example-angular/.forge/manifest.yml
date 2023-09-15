@@ -12,4 +12,10 @@ resources:
   - key: main
     path: ../../../dist/apps/forge-example-angular
 app:
-  id: ari:cloud:ecosystem::app/402fc438-6db3-4fe2-a948-98c4152b4f2c
+  id: ari:cloud:ecosystem::app/6bfc21e8-1d3c-4824-8eb4-3ed183f277ab
+permissions:
+  content:
+    styles:
+      - unsafe-inline
+    scripts:
+      - unsafe-inline

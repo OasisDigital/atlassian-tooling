@@ -23,9 +23,6 @@
         "scripts": []
       },
       "configurations": {
-        "forge": {
-          "outputPath": "dist/apps/connect-example-angular"
-        },
         "production": {
           "budgets": [
             {

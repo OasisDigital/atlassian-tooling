@@ -4,6 +4,21 @@
       "implementation": "./src/executors/lint/executor",
       "schema": "./src/executors/lint/schema.json",
       "description": "lint executor"
+    },
+    "deploy": {
+      "implementation": "./src/executors/deploy/executor",
+      "schema": "./src/executors/deploy/schema.json",
+      "description": "deploy executor"
+    },
+    "install": {
+      "implementation": "./src/executors/install/executor",
+      "schema": "./src/executors/install/schema.json",
+      "description": "install executor"
+    },
+    "uninstall": {
+      "implementation": "./src/executors/uninstall/executor",
+      "schema": "./src/executors/uninstall/schema.json",
+      "description": "uninstall executor"
     }
   }
 }

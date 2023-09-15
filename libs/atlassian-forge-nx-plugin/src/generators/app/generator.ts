@@ -3,6 +3,7 @@ import {
   logger,
   readProjectConfiguration,
   Tree,
+  updateProjectConfiguration,
 } from '@nx/devkit';
 import { join, relative } from 'path/posix';
 
@@ -54,8 +55,35 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
 
     if (distPath) {
       manifestContents.resources[0].path = distPath;
-      tree.write(manifestFilePath, parseToYaml(manifestContents));
     }
+  }
+
+  manifestContents.permissions = {
+    content: { styles: ['unsafe-inline'], scripts: ['unsafe-inline'] },
+  };
+
+  tree.write(manifestFilePath, parseToYaml(manifestContents));
+
+  if (projectConfig.targets) {
+    projectConfig.targets['forge-deploy'] = {
+      executor: '@oasisdigital/atlassian-forge-nx-plugin:deploy',
+      options: {
+        buildConfig: 'production',
+      },
+    };
+    projectConfig.targets['forge-install'] = {
+      executor: '@oasisdigital/atlassian-forge-nx-plugin:install',
+    };
+    projectConfig.targets['forge-uninstall'] = {
+      executor: '@oasisdigital/atlassian-forge-nx-plugin:uninstall',
+    };
+    projectConfig.targets['forge-lint'] = {
+      executor: '@oasisdigital/atlassian-forge-nx-plugin:lint',
+    };
+
+    updateProjectConfiguration(tree, options.project, projectConfig);
+  } else {
+    throw new Error('Could not find targets list in project configuration...');
   }
 
   await formatFiles(tree);

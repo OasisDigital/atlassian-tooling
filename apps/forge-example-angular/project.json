@@ -97,64 +97,20 @@
         "buildTarget": "forge-example-angular:build"
       }
     },
+    "forge-deploy": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:deploy",
+      "options": {
+        "buildConfig": "production"
+      }
+    },
+    "forge-install": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:install"
+    },
+    "forge-uninstall": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:uninstall"
+    },
     "forge-lint": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "npx forge lint",
-        "cwd": "apps/forge-example-angular/.forge"
-      }
-    },
-    "deploy": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": ["npx nx build forge-example-app", "npx forge deploy"],
-        "cwd": "apps/forge-example-angular/.forge",
-        "parallel": false
-      }
-    },
-    "app-build-watch": {
-      "executor": "nx:run-commands",
-      "options": {
-        "command": "npx nx build forge-example-app --watch"
-      }
-    },
-    "tunnel": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          "npx nx build forge-example-app --watch",
-          "npx forge tunnel"
-        ],
-        "cwd": "apps/forge-example-angular/.forge",
-        "parallel": true
-      }
-    },
-    "install": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          {
-            "command": "npx nx deploy forge-example-app",
-            "forwardAllArgs": false
-          },
-          "npx forge install --non-interactive --product=Jira --environment=development"
-        ],
-        "cwd": "apps/forge-example-angular/.forge",
-        "parallel": false
-      }
-    },
-    "upgrade": {
-      "executor": "nx:run-commands",
-      "options": {
-        "commands": [
-          {
-            "command": "npx nx deploy forge-example-app",
-            "forwardAllArgs": false
-          },
-          "npx forge install --non-interactive --upgrade --confirm-scopes --product=Jira --environment=development"
-        ],
-        "cwd": "apps/forge-example-angular/.forge"
-      }
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:lint"
     }
   }
 }

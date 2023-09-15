@@ -2,8 +2,30 @@
   "$schema": "http://json-schema.org/schema",
   "version": 2,
   "title": "Lint executor",
-  "description": "",
+  "description": "check the source files for common errors",
   "type": "object",
-  "properties": {},
+  "properties": {
+    "verbose": {
+      "type": "boolean",
+      "description": "enable verbose mode",
+      "default": false
+    },
+    "fix": {
+      "type": "boolean",
+      "description": "Attempt to automatically fix any issues encountered (default: false)",
+      "default": false
+    },
+    "environment": {
+      "type": "string",
+      "description": "Specify the environment (see your default environment by running forge settings list)",
+      "alias": "e"
+    },
+    "help": {
+      "alias": "h",
+      "type": "boolean",
+      "description": "display help for command",
+      "default": false
+    }
+  },
   "required": []
 }

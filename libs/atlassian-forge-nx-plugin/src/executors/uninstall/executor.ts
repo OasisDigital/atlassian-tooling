@@ -1,10 +1,10 @@
 import { ExecutorContext, logger } from '@nx/devkit';
-import { LintExecutorSchema } from './schema';
+import { UninstallExecutorSchema } from './schema';
 import { join } from 'path/posix';
 import { execSync } from 'child_process';
 
-export default async function runLintExecutor(
-  options: LintExecutorSchema,
+export default async function runUninstallExecutor(
+  options: UninstallExecutorSchema,
   context: ExecutorContext
 ) {
   const projectConfig =
@@ -12,11 +12,8 @@ export default async function runLintExecutor(
   const workingDirectory = join(projectConfig.root, '.forge');
 
   const deployOptions: string[] = [];
-  if (options.environment) {
-    deployOptions.push(`--environment=${options.environment}`);
-  }
-  if (options.fix) {
-    deployOptions.push(`--fix`);
+  if (options.installationId) {
+    deployOptions.push(options.installationId);
   }
   if (options.help) {
     deployOptions.push(`--help`);
@@ -26,7 +23,7 @@ export default async function runLintExecutor(
   }
 
   try {
-    execSync(`npx forge lint ${deployOptions.join(' ')}`, {
+    execSync(`npx forge uninstall ${deployOptions.join(' ')}`, {
       cwd: workingDirectory,
       stdio: 'inherit',
     });

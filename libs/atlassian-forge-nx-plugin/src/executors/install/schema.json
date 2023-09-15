@@ -1,0 +1,51 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "title": "Install executor",
+  "description": "Deploy your app to an environment",
+  "type": "object",
+  "properties": {
+    "environment": {
+      "type": "string",
+      "description": "Specify the environment (see your default environment by running forge settings list)",
+      "alias": "e"
+    },
+    "site": {
+      "type": "string",
+      "description": "site URL (example.atlassian.net)",
+      "alias": "s"
+    },
+    "product": {
+      "type": "string",
+      "description": "product (Jira, Confluence, Compass)",
+      "alias": "p"
+    },
+    "upgrade": {
+      "type": "boolean",
+      "description": "upgrade an existing installation (default: false)",
+      "default": false
+    },
+    "confirmScopes": {
+      "type": "boolean",
+      "description": "skip confirmation of scopes for the app before installing or upgrading the app (default: false)",
+      "default": false
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "enable verbose mode",
+      "default": false
+    },
+    "help": {
+      "alias": "h",
+      "type": "boolean",
+      "description": "display help for command",
+      "default": false
+    },
+    "nonInteractive": {
+      "type": "boolean",
+      "description": "Run the command without input prompts",
+      "default": false
+    }
+  },
+  "required": []
+}

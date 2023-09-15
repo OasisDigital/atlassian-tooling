@@ -1,10 +1,11 @@
 import { ExecutorContext, logger } from '@nx/devkit';
-import { LintExecutorSchema } from './schema';
 import { join } from 'path/posix';
+
+import { InstallExecutorSchema } from './schema';
 import { execSync } from 'child_process';
 
-export default async function runLintExecutor(
-  options: LintExecutorSchema,
+export default async function runInstallExecutor(
+  options: InstallExecutorSchema,
   context: ExecutorContext
 ) {
   const projectConfig =
@@ -15,8 +16,20 @@ export default async function runLintExecutor(
   if (options.environment) {
     deployOptions.push(`--environment=${options.environment}`);
   }
-  if (options.fix) {
-    deployOptions.push(`--fix`);
+  if (options.site) {
+    deployOptions.push(`--site=${options.site}`);
+  }
+  if (options.product) {
+    deployOptions.push(`--product=${options.product}`);
+  }
+  if (options.upgrade) {
+    deployOptions.push(`--upgrade`);
+  }
+  if (options.confirmScopes) {
+    deployOptions.push(`--confirm-scopes`);
+  }
+  if (options.nonInteractive) {
+    deployOptions.push(`--non-interactive`);
   }
   if (options.help) {
     deployOptions.push(`--help`);
@@ -26,7 +39,7 @@ export default async function runLintExecutor(
   }
 
   try {
-    execSync(`npx forge lint ${deployOptions.join(' ')}`, {
+    execSync(`npx forge install ${deployOptions.join(' ')}`, {
       cwd: workingDirectory,
       stdio: 'inherit',
     });
