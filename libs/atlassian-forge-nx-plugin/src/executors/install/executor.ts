@@ -1,6 +1,5 @@
 import { ExecutorContext, logger } from '@nx/devkit';
 
-
 import { InstallExecutorSchema } from './schema';
 
 import { execSync } from 'child_process';
@@ -14,34 +13,34 @@ export default async function runInstallExecutor(
     context.projectsConfigurations.projects[context.projectName];
   const workingDirectory = join(projectConfig.root, '.forge');
 
-  const deployOptions: string[] = [];
+  const installOptions: string[] = [];
   if (options.environment) {
-    deployOptions.push(`--environment=${options.environment}`);
+    installOptions.push(`--environment=${options.environment}`);
   }
   if (options.site) {
-    deployOptions.push(`--site=${options.site}`);
+    installOptions.push(`--site=${options.site}`);
   }
   if (options.product) {
-    deployOptions.push(`--product=${options.product}`);
+    installOptions.push(`--product=${options.product}`);
   }
   if (options.upgrade) {
-    deployOptions.push(`--upgrade`);
+    installOptions.push(`--upgrade`);
   }
   if (options.confirmScopes) {
-    deployOptions.push(`--confirm-scopes`);
+    installOptions.push(`--confirm-scopes`);
   }
   if (options.nonInteractive) {
-    deployOptions.push(`--non-interactive`);
+    installOptions.push(`--non-interactive`);
   }
   if (options.help) {
-    deployOptions.push(`--help`);
+    installOptions.push(`--help`);
   }
   if (options.verbose) {
-    deployOptions.push(`--verbose`);
+    installOptions.push(`--verbose`);
   }
 
   try {
-    execSync(`npx forge install ${deployOptions.join(' ')}`, {
+    execSync(`npx forge install ${installOptions.join(' ')}`, {
       cwd: workingDirectory,
       stdio: 'inherit',
     });

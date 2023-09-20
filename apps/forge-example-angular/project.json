@@ -103,6 +103,12 @@
         "buildConfig": "production"
       }
     },
+    "forge-tunnel": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:tunnel",
+      "options": {
+        "buildConfig": "production"
+      }
+    },
     "forge-install": {
       "executor": "@oasisdigital/atlassian-forge-nx-plugin:install"
     },

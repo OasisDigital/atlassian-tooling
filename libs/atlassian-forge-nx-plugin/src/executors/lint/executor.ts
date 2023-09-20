@@ -13,22 +13,22 @@ export default async function runLintExecutor(
     context.projectsConfigurations.projects[context.projectName];
   const workingDirectory = join(projectConfig.root, '.forge');
 
-  const deployOptions: string[] = [];
+  const lintOptions: string[] = [];
   if (options.environment) {
-    deployOptions.push(`--environment=${options.environment}`);
+    lintOptions.push(`--environment=${options.environment}`);
   }
   if (options.fix) {
-    deployOptions.push(`--fix`);
+    lintOptions.push(`--fix`);
   }
   if (options.help) {
-    deployOptions.push(`--help`);
+    lintOptions.push(`--help`);
   }
   if (options.verbose) {
-    deployOptions.push(`--verbose`);
+    lintOptions.push(`--verbose`);
   }
 
   try {
-    execSync(`npx forge lint ${deployOptions.join(' ')}`, {
+    execSync(`npx forge lint ${lintOptions.join(' ')}`, {
       cwd: workingDirectory,
       stdio: 'inherit',
     });

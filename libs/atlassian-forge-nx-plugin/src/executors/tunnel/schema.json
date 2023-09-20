@@ -1,0 +1,36 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "title": "Tunnel executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "verbose": {
+      "type": "boolean",
+      "description": "enable verbose mode",
+      "default": false
+    },
+    "debug": {
+      "type": "boolean",
+      "description": "enable debugger mode",
+      "default": false,
+      "alias": "d"
+    },
+    "environment": {
+      "type": "string",
+      "description": "Specify the environment (see your default environment by running forge settings list)",
+      "alias": "e"
+    },
+    "help": {
+      "alias": "h",
+      "type": "boolean",
+      "description": "display help for command",
+      "default": false
+    },
+    "buildConfig": {
+      "type": "string",
+      "description": "Application build config to run a watch:build on before tunneling"
+    }
+  },
+  "required": []
+}

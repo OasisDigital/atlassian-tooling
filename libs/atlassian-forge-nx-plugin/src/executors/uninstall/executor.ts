@@ -13,19 +13,19 @@ export default async function runUninstallExecutor(
     context.projectsConfigurations.projects[context.projectName];
   const workingDirectory = join(projectConfig.root, '.forge');
 
-  const deployOptions: string[] = [];
+  const uninstallOptions: string[] = [];
   if (options.installationId) {
-    deployOptions.push(options.installationId);
+    uninstallOptions.push(options.installationId);
   }
   if (options.help) {
-    deployOptions.push(`--help`);
+    uninstallOptions.push(`--help`);
   }
   if (options.verbose) {
-    deployOptions.push(`--verbose`);
+    uninstallOptions.push(`--verbose`);
   }
 
   try {
-    execSync(`npx forge uninstall ${deployOptions.join(' ')}`, {
+    execSync(`npx forge uninstall ${uninstallOptions.join(' ')}`, {
       cwd: workingDirectory,
       stdio: 'inherit',
     });
