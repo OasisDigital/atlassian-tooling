@@ -1,4 +1,5 @@
 import { InjectionToken } from '@angular/core';
+
 import { AP } from './types';
 
 // Create an injector token for Angular

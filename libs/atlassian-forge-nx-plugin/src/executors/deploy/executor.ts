@@ -1,7 +1,8 @@
 import { ExecutorContext, logger, runExecutor } from '@nx/devkit';
-import { execSync } from 'child_process';
 
 import { DeployExecutorSchema } from './schema';
+
+import { execSync } from 'child_process';
 import { join } from 'path/posix';
 
 export default async function runDeployExecutor(

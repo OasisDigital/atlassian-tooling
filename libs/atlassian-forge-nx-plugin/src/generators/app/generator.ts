@@ -6,16 +6,17 @@ import {
   Tree,
   updateProjectConfiguration,
 } from '@nx/devkit';
-import { join, relative } from 'path/posix';
+import { dump as parseToYaml } from 'js-yaml';
+import parse from 'node-html-parser';
+import { readYamlFile } from 'nx/src/utils/fileutils';
 
-import { execSync } from 'child_process';
+import initGenerator from '../init/generator';
+import { forgeLogin } from '../util/forge-account';
 
 import { AppGeneratorSchema } from './schema';
-import initGenerator from '../init/generator';
-import { readYamlFile } from 'nx/src/utils/fileutils';
-import { dump as parseToYaml } from 'js-yaml';
-import { forgeLogin } from '../util/forge-account';
-import parse from 'node-html-parser';
+
+import { execSync } from 'child_process';
+import { join, relative } from 'path/posix';
 
 export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
   (await initGenerator(tree))();

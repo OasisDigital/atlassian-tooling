@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+
 import { NxWelcomeComponent } from './nx-welcome.component';
 
 @Component({

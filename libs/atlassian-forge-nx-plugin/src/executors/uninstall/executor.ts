@@ -1,7 +1,9 @@
 import { ExecutorContext, logger } from '@nx/devkit';
+
 import { UninstallExecutorSchema } from './schema';
-import { join } from 'path/posix';
+
 import { execSync } from 'child_process';
+import { join } from 'path/posix';
 
 export default async function runUninstallExecutor(
   options: UninstallExecutorSchema,

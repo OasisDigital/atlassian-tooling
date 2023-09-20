@@ -6,12 +6,14 @@ import {
   Tree,
   updateProjectConfiguration,
 } from '@nx/devkit';
-import { join } from 'path/posix';
 import { parse } from 'node-html-parser';
 
-import { ConnectMigrationGeneratorSchema } from './schema';
-import initGenerator from '../init/generator';
 import appGenerator from '../app/generator';
+import initGenerator from '../init/generator';
+
+import { ConnectMigrationGeneratorSchema } from './schema';
+
+import { join } from 'path/posix';
 
 export async function connectMigrationGenerator(
   tree: Tree,

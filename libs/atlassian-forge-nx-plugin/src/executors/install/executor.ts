@@ -1,8 +1,10 @@
 import { ExecutorContext, logger } from '@nx/devkit';
-import { join } from 'path/posix';
+
 
 import { InstallExecutorSchema } from './schema';
+
 import { execSync } from 'child_process';
+import { join } from 'path/posix';
 
 export default async function runInstallExecutor(
   options: InstallExecutorSchema,

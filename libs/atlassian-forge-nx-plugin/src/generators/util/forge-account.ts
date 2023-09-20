@@ -1,4 +1,5 @@
 import { logger } from '@nx/devkit';
+
 import { execSync } from 'child_process';
 
 export function forgeLogin() {
@@ -19,5 +20,5 @@ export function forgeLogin() {
 }
 
 export function forgeLogout() {
-  return execSync('npx forge logout').toString();
+  return execSync('npx forge logout', { stdio: 'inherit' }).toString();
 }

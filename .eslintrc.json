@@ -1,7 +1,7 @@
 {
   "root": true,
   "ignorePatterns": ["**/*"],
-  "plugins": ["@nx"],
+  "plugins": ["@nx", "eslint-plugin-import"],
   "overrides": [
     {
       "files": "*.json",
@@ -22,6 +22,29 @@
                 "onlyDependOnLibsWithTags": ["*"]
               }
             ]
+          }
+        ],
+        "import/order": [
+          "error",
+          {
+            "alphabetize": {
+              "order": "asc",
+              "caseInsensitive": true
+            },
+            "newlines-between": "always",
+            "pathGroups": [
+              {
+                "group": "external",
+                "position": "after",
+                "pattern": "[!@oasisdigital, !.**]"
+              },
+              {
+                "group": "internal",
+                "pattern": "@oasisdigital/**"
+              }
+            ],
+            "groups": ["external", "internal", "parent", "sibling", "index"],
+            "pathGroupsExcludedImportTypes": ["builtin"]
           }
         ]
       }

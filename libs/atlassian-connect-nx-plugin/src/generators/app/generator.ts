@@ -11,10 +11,11 @@ import {
 } from '@nx/devkit';
 import { applicationGenerator as expressAppGenerator } from '@nx/express';
 
+import { initGenerator } from '../init/generator';
+
 import { AppGeneratorSchema } from './schema';
 
 import { join } from 'path/posix';
-import { initGenerator } from '../init/generator';
 
 /*
   We are creating:
