@@ -5,9 +5,9 @@ import {
   readProjectConfiguration,
   Tree,
   updateProjectConfiguration,
+  workspaceRoot,
 } from '@nx/devkit';
 import { dump as parseToYaml } from 'js-yaml';
-import parse from 'node-html-parser';
 import { readYamlFile } from 'nx/src/utils/fileutils';
 
 import initGenerator from '../init/generator';
@@ -39,37 +39,40 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
   tree.delete(join(directory, 'package-lock.json'));
   tree.delete(join(directory, 'README.md'));
 
-  const manifestFilePath = join(directory, 'manifest.yml');
-  const manifestContents = readYamlFile(manifestFilePath);
+  let buildConfig = 'production';
+  let distPath = relative(
+    directory,
+    join(workspaceRoot, 'dist', 'apps', projectConfig.name)
+  );
 
-  if (manifestContents?.resources[0]?.key === 'main') {
-    let distPath: string | undefined;
+  if (projectConfig.targets?.['build']?.executor?.includes('angular')) {
+    distPath = relative(
+      directory,
+      projectConfig.targets['build'].options.outputPath
+    );
 
-    if (projectConfig.targets?.['build']?.executor?.includes('angular')) {
-      distPath = relative(
-        directory,
-        projectConfig.targets['build'].options.outputPath
-      );
-      const indexHTMLFilePath = join(projectConfig.sourceRoot, 'index.html');
-      const indexHTMLContent = tree.read(indexHTMLFilePath).toString();
-
-      const parsedHTML = parse(indexHTMLContent);
-      const baseElement = parsedHTML.getElementsByTagName('base')[0];
-      if (baseElement) {
-        baseElement.setAttribute('href', '');
-        tree.write(indexHTMLFilePath, parsedHTML.toString());
-      } else {
-        logger.warn('Unable to update baseHref in `index.html`...Skipping...');
-      }
+    if (projectConfig.targets['build'].configurations[buildConfig]) {
+      projectConfig.targets['build'].configurations[buildConfig].baseHref = '';
     } else {
       logger.error(
-        "Unsupported application type...\r\nYou will need to manually update your `manifest.yml` with the application's dist path for the `main` resource"
+        `Could not find ${buildConfig} build configuration...\r\nYou will need to manually update the baseHref to be an empty string ('') and the \`forge-deploy\` target's \`buildConfig\` value for the configuration you deploy to the Atlassian Servers...`
       );
+      buildConfig = '';
     }
+  } else {
+    logger.error(
+      `Unsupported application type...\r\nYou will need to manually update your \`manifest.yml\` with the application's dist path if it differs from \`${distPath}\``
+    );
+  }
 
-    if (distPath) {
-      manifestContents.resources[0].path = distPath;
-    }
+  const manifestFilePath = join(directory, 'manifest.yml');
+  const manifestContents = readYamlFile(manifestFilePath);
+  if (manifestContents?.resources[0]?.key === 'main') {
+    manifestContents.resources[0].path = distPath;
+  } else {
+    logger.error(
+      `Unable to find forge \`main\` resource...\r\nYou will need to manually update your \`manifest.yml\`'s main resource with your frontend app's dist path`
+    );
   }
 
   manifestContents.permissions = {
@@ -83,7 +86,7 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
     projectConfig.targets['forge-deploy'] = {
       executor: '@oasisdigital/atlassian-forge-nx-plugin:deploy',
       options: {
-        buildConfig: 'production',
+        buildConfig,
       },
     };
     projectConfig.targets['forge-install'] = {

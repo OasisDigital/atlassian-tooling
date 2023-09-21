@@ -12,10 +12,10 @@ resources:
   - key: main
     path: ../../../dist/apps/forge-example-angular
 app:
-  id: ari:cloud:ecosystem::app/6bfc21e8-1d3c-4824-8eb4-3ed183f277ab
+  id: ari:cloud:ecosystem::app/7a916e42-dfb6-41cc-8dcc-69ad41f2522e
 permissions:
   scopes:
-    - 'read:me'
+    - read:me
   content:
     styles:
       - unsafe-inline
