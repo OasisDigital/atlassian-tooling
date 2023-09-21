@@ -73,6 +73,7 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
   }
 
   manifestContents.permissions = {
+    scopes: ['read:me'],
     content: { styles: ['unsafe-inline'], scripts: ['unsafe-inline'] },
   };
 

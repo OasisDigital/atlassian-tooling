@@ -14,6 +14,8 @@ resources:
 app:
   id: ari:cloud:ecosystem::app/6bfc21e8-1d3c-4824-8eb4-3ed183f277ab
 permissions:
+  scopes:
+    - 'read:me'
   content:
     styles:
       - unsafe-inline
