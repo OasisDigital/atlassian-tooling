@@ -45,19 +45,30 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
     join(workspaceRoot, 'dist', 'apps', projectConfig.name)
   );
 
-  if (projectConfig.targets?.['build']?.executor?.includes('angular')) {
+  const supportedExecutors = [
+    '@angular-devkit/build-angular:browser',
+    '@nx/webpack:webpack',
+  ];
+
+  if (supportedExecutors.includes(projectConfig.targets?.['build']?.executor)) {
     distPath = relative(
       directory,
       projectConfig.targets['build'].options.outputPath
     );
-
-    if (projectConfig.targets['build'].configurations[buildConfig]) {
-      projectConfig.targets['build'].configurations[buildConfig].baseHref = '';
-    } else {
+    if (!projectConfig.targets['build'].configurations[buildConfig]) {
       logger.error(
-        `Could not find ${buildConfig} build configuration...\r\nYou will need to manually update the baseHref to be an empty string ('') and the \`forge-deploy\` target's \`buildConfig\` value for the configuration you deploy to the Atlassian Servers...`
+        `Could not find ${buildConfig} build configuration...\r\nYou will need to manually update the \`forge-deploy\` target's \`buildConfig\` value for the configuration you deploy to the Atlassian Servers...`
       );
       buildConfig = '';
+    } else {
+      if (projectConfig.targets['build'].options.baseHref) {
+        projectConfig.targets['build'].configurations[buildConfig].baseHref =
+          '';
+      } else {
+        logger.error(
+          `Could not find ${buildConfig} build configuration...\r\nYou will need to manually update the baseHref to be an empty string ('') for use with Forge...`
+        );
+      }
     }
   } else {
     logger.error(

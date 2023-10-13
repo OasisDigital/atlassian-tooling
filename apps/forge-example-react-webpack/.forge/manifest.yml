@@ -1,0 +1,23 @@
+modules:
+  jira:globalPage:
+    - key: test-app-3-hello-world-page
+      resource: main
+      resolver:
+        function: resolver
+      title: test-app-3
+  function:
+    - key: resolver
+      handler: index.handler
+resources:
+  - key: main
+    path: ../../../dist/apps/forge-example-react-webpack
+app:
+  id: ari:cloud:ecosystem::app/0a7f9766-c859-4e54-9a03-2e1e674de303
+permissions:
+  scopes:
+    - read:me
+  content:
+    styles:
+      - unsafe-inline
+    scripts:
+      - unsafe-inline
