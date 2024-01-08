@@ -39,6 +39,7 @@ testem.log
 Thumbs.db
 
 .angular
+.nx
 
 # Generated Atlassian Connect File
 **/assets/atlassian-connect.json

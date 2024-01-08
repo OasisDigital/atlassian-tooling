@@ -19,6 +19,11 @@
       "implementation": "./src/executors/uninstall/executor",
       "schema": "./src/executors/uninstall/schema.json",
       "description": "uninstall executor"
+    },
+    "deploy-watch": {
+      "implementation": "./src/executors/deploy-watch/executor",
+      "schema": "./src/executors/deploy-watch/schema.json",
+      "description": "deploy-watch executor"
     }
   }
 }
