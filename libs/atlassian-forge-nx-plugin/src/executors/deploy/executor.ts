@@ -45,7 +45,11 @@ export default async function runDeployExecutor(
   }
 
   try {
-    execSync(`npx forge deploy ${deployOptions.join(' ')}`, {
+    const command =
+      deployOptions.length > 0
+        ? `npx forge deploy ${deployOptions.join(' ')}`
+        : 'npx forge deploy';
+    execSync(command, {
       cwd: workingDirectory,
       stdio: 'inherit',
     });

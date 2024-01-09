@@ -100,6 +100,12 @@ export async function appGenerator(tree: Tree, options: AppGeneratorSchema) {
         buildConfig,
       },
     };
+    projectConfig.targets['forge-deploy-watch'] = {
+      executor: '@oasisdigital/atlassian-forge-nx-plugin:deploy-watch',
+      options: {
+        buildConfig,
+      },
+    };
     projectConfig.targets['forge-install'] = {
       executor: '@oasisdigital/atlassian-forge-nx-plugin:install',
     };

@@ -104,6 +104,12 @@
         "buildConfig": "production"
       }
     },
+    "forge-deploy-watch": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:deploy-watch",
+      "options": {
+        "buildConfig": "production"
+      }
+    },
     "forge-install": {
       "executor": "@oasisdigital/atlassian-forge-nx-plugin:install"
     },

@@ -1,0 +1,41 @@
+{
+  "$schema": "http://json-schema.org/schema",
+  "version": 2,
+  "title": "DeployWatch executor",
+  "description": "",
+  "type": "object",
+  "properties": {
+    "environment": {
+      "type": "string",
+      "description": "Specify the environment (see your default environment by running forge settings list)",
+      "alias": "e"
+    },
+    "noVerify": {
+      "type": "boolean",
+      "description": "Disable pre-deployment checks",
+      "alias": "f",
+      "default": false
+    },
+    "nonInteractive": {
+      "type": "boolean",
+      "description": "Run the command without input prompts",
+      "default": false
+    },
+    "verbose": {
+      "type": "boolean",
+      "description": "enable verbose mode",
+      "default": false
+    },
+    "help": {
+      "alias": "h",
+      "type": "boolean",
+      "description": "display help for command",
+      "default": false
+    },
+    "buildConfig": {
+      "type": "string",
+      "description": "Application build config to run before deploying"
+    }
+  },
+  "required": ["buildConfig"]
+}
