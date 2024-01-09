@@ -1,8 +1,9 @@
 import { ExecutorContext, logger, runExecutor } from '@nx/devkit';
+import { FSWatcher, watch } from 'chokidar';
 
 import { DeployWatchExecutorSchema } from './schema';
 
-import { ChildProcess, exec, execSync } from 'child_process';
+import { ChildProcess, exec } from 'child_process';
 import { join } from 'path/posix';
 
 export default async function runDeployWatchExecutor(
@@ -43,29 +44,54 @@ export default async function runDeployWatchExecutor(
   );
 
   let forgeDeployProcess: ChildProcess | undefined;
+  let appChangesTimeout: NodeJS.Timeout | undefined;
+  let forgeChangesTimeout: NodeJS.Timeout | undefined;
+  let changesWatch: FSWatcher | undefined;
+
   for await (const res of appResult) {
     if (!res.success) {
       return res;
     } else {
-      try {
-        if (forgeDeployProcess && forgeDeployProcess.exitCode === null) {
-          forgeDeployProcess.kill();
-        }
-        const command =
-          deployOptions.length > 0
-            ? `npx forge deploy ${deployOptions.join(' ')}`
-            : 'npx forge deploy';
-        forgeDeployProcess = exec(command, {
-          cwd: workingDirectory,
-          // stdio: 'inherit',
-        });
-        forgeDeployProcess.stdout.pipe(process.stdout);
-      } catch (err) {
-        logger.error(err);
-        return {
-          success: false,
-        };
+      if (appChangesTimeout) {
+        clearTimeout(appChangesTimeout);
       }
+      appChangesTimeout = setTimeout(() => {
+        if (changesWatch) {
+          changesWatch.close();
+        }
+        let isInitial = true;
+        changesWatch = watch(workingDirectory, {}).on('all', () => {
+          if (forgeChangesTimeout) {
+            clearTimeout(forgeChangesTimeout);
+          }
+          forgeChangesTimeout = setTimeout(() => {
+            if (isInitial) {
+              isInitial = false;
+            } else {
+              logger.info('Change detected in `.forge` directory...');
+            }
+            try {
+              if (forgeDeployProcess && forgeDeployProcess.exitCode === null) {
+                forgeDeployProcess.kill();
+              }
+              const command =
+                deployOptions.length > 0
+                  ? `npx forge deploy ${deployOptions.join(' ')}`
+                  : 'npx forge deploy';
+              forgeDeployProcess = exec(command, {
+                cwd: workingDirectory,
+                // stdio: 'inherit',
+              });
+              forgeDeployProcess.stdout.pipe(process.stdout);
+            } catch (err) {
+              logger.error(err);
+              return {
+                success: false,
+              };
+            }
+          }, 1000);
+        });
+      }, 1000);
     }
   }
 }

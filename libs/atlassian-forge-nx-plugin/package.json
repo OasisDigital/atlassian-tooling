@@ -8,7 +8,8 @@
     "js-yaml": "^4.1.0",
     "@types/js-yaml": "^4.0.5",
     "@forge/cli": "latest",
-    "node-html-parser": "^6.1.10"
+    "node-html-parser": "^6.1.10",
+    "chokidar": "^3.5.3"
   },
   "type": "commonjs",
   "main": "./src/index.js",
