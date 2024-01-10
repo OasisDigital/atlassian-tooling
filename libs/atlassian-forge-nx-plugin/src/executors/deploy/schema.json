@@ -32,10 +32,14 @@
       "description": "display help for command",
       "default": false
     },
-    "buildConfig": {
+    "buildTarget": {
       "type": "string",
-      "description": "Application build config to run before deploying"
+      "description": "Application build target and/or configuration to run before deploying Forge app"
+    },
+    "buildTargets": {
+      "type": "list",
+      "description": "Application build targets and/or configurations to run before deploying Forge app"
     }
   },
-  "required": ["buildConfig"]
+  "required": []
 }

@@ -1,5 +1,6 @@
 export interface DeployExecutorSchema {
-  buildConfig: string;
+  buildTarget?: string;
+  buildTargets?: string[];
   environment?: string;
   noVerify: boolean;
   nonInteractive: boolean;

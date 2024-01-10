@@ -86,7 +86,10 @@ export async function connectMigrationGenerator(
 
   (await initGenerator(tree))();
 
-  await appGenerator(tree, options);
+  await appGenerator(tree, {
+    name: options.name,
+    buildTarget: `${options.project}:build:production`,
+  });
 
   await formatFiles(tree);
 

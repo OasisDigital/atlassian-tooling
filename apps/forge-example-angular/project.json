@@ -36,8 +36,7 @@
               "maximumError": "4kb"
             }
           ],
-          "outputHashing": "all",
-          "baseHref": ""
+          "outputHashing": "all"
         },
         "development": {
           "buildOptimizer": false,
@@ -97,27 +96,6 @@
       "options": {
         "buildTarget": "forge-example-angular:build"
       }
-    },
-    "forge-deploy": {
-      "executor": "@oasisdigital/atlassian-forge-nx-plugin:deploy",
-      "options": {
-        "buildConfig": "production"
-      }
-    },
-    "forge-deploy-watch": {
-      "executor": "@oasisdigital/atlassian-forge-nx-plugin:deploy-watch",
-      "options": {
-        "buildConfig": "production"
-      }
-    },
-    "forge-install": {
-      "executor": "@oasisdigital/atlassian-forge-nx-plugin:install"
-    },
-    "forge-uninstall": {
-      "executor": "@oasisdigital/atlassian-forge-nx-plugin:uninstall"
-    },
-    "forge-lint": {
-      "executor": "@oasisdigital/atlassian-forge-nx-plugin:lint"
     }
   }
 }

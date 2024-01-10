@@ -1,6 +1,6 @@
 /* eslint-disable */
 export default {
-  displayName: 'forge-example-angular',
+  displayName: 'apps/forge-example-angular',
   preset: '../../jest.preset.js',
   setupFilesAfterEnv: ['<rootDir>/src/test-setup.ts'],
   coverageDirectory: '../../coverage/apps/forge-example-angular',

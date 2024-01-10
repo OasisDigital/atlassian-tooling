@@ -1,5 +1,4 @@
 import { TestBed } from '@angular/core/testing';
-
 import { AppComponent } from './app.component';
 import { NxWelcomeComponent } from './nx-welcome.component';
 
@@ -15,13 +14,13 @@ describe('AppComponent', () => {
     fixture.detectChanges();
     const compiled = fixture.nativeElement as HTMLElement;
     expect(compiled.querySelector('h1')?.textContent).toContain(
-      'Welcome forge-example-angular'
+      'Welcome apps/forge-example-angular'
     );
   });
 
-  it(`should have as title 'forge-example-angular'`, () => {
+  it(`should have as title 'apps/forge-example-angular'`, () => {
     const fixture = TestBed.createComponent(AppComponent);
     const app = fixture.componentInstance;
-    expect(app.title).toEqual('forge-example-angular');
+    expect(app.title).toEqual('apps/forge-example-angular');
   });
 });

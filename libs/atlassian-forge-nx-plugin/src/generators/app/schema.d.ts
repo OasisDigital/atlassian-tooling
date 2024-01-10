@@ -1,3 +1,5 @@
 export interface AppGeneratorSchema {
-  project: string;
+  name: string;
+  buildTarget: string;
+  directory?: string;
 }

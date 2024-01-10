@@ -12,7 +12,16 @@
         "index": 0
       },
       "x-prompt": "What project would you like to migrate from connect to forge?"
+    },
+    "name": {
+      "type": "string",
+      "description": "",
+      "$default": {
+        "$source": "argv",
+        "index": 0
+      },
+      "x-prompt": "What would you like to name your forge app?"
     }
   },
-  "required": ["project"]
+  "required": ["project", "name"]
 }

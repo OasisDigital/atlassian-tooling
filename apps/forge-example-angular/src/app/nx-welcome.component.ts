@@ -1,5 +1,5 @@
-import { CommonModule } from '@angular/common';
 import { Component, ViewEncapsulation } from '@angular/core';
+import { CommonModule } from '@angular/common';
 
 @Component({
   selector: 'oasisdigital-nx-welcome',
@@ -423,7 +423,7 @@ import { Component, ViewEncapsulation } from '@angular/core';
         <div id="welcome">
           <h1>
             <span> Hello there, </span>
-            Welcome forge-example-angular 👋
+            Welcome apps/forge-example-angular 👋
           </h1>
         </div>
         <!--  HERO  -->

@@ -3,7 +3,7 @@ import { ExecutorContext, logger } from '@nx/devkit';
 import { UninstallExecutorSchema } from './schema';
 
 import { execSync } from 'child_process';
-import { join } from 'path/posix';
+import { normalize } from 'path/posix';
 
 export default async function runUninstallExecutor(
   options: UninstallExecutorSchema,
@@ -11,7 +11,7 @@ export default async function runUninstallExecutor(
 ) {
   const projectConfig =
     context.projectsConfigurations.projects[context.projectName];
-  const workingDirectory = join(projectConfig.root, '.forge');
+  const workingDirectory = normalize(projectConfig.root);
 
   const deployOptions: string[] = [];
   if (options.installationId) {

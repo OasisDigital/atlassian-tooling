@@ -1,10 +1,28 @@
 import { ExecutorContext, logger, runExecutor } from '@nx/devkit';
-import { FSWatcher, watch } from 'chokidar';
+import { watch } from 'chokidar';
+import {
+  Observable,
+  ObservableInputTuple,
+  Subject,
+  catchError,
+  combineLatest,
+  debounceTime,
+  filter,
+  from,
+  map,
+  of,
+  switchMap,
+  take,
+  tap,
+  lastValueFrom,
+  exhaustMap,
+  startWith,
+} from 'rxjs';
 
 import { DeployWatchExecutorSchema } from './schema';
 
-import { ChildProcess, exec } from 'child_process';
-import { join } from 'path/posix';
+import { exec } from 'child_process';
+import { normalize } from 'path/posix';
 
 export default async function runDeployWatchExecutor(
   options: DeployWatchExecutorSchema,
@@ -27,71 +45,121 @@ export default async function runDeployWatchExecutor(
     deployOptions.push(`--verbose`);
   }
 
+  const command =
+    deployOptions.length > 0
+      ? `npx forge deploy ${deployOptions.join(' ')}`
+      : 'npx forge deploy';
+
   const projectConfig =
     context.projectsConfigurations.projects[context.projectName];
-  const workingDirectory = join(projectConfig.root, '.forge');
+  const workingDirectory = normalize(projectConfig.root);
 
-  const appResult = await runExecutor(
-    {
-      project: context.projectName,
-      target: 'build',
-      configuration: options.buildConfig,
-    },
-    {
-      watch: true,
-    },
-    context
-  );
+  if (options.buildTarget || options.buildTargets) {
+    const buildTargets = options.buildTarget
+      ? [options.buildTarget]
+      : options.buildTargets;
 
-  let forgeDeployProcess: ChildProcess | undefined;
-  let appChangesTimeout: NodeJS.Timeout | undefined;
-  let forgeChangesTimeout: NodeJS.Timeout | undefined;
-  let changesWatch: FSWatcher | undefined;
-
-  for await (const res of appResult) {
-    if (!res.success) {
-      return res;
-    } else {
-      if (appChangesTimeout) {
-        clearTimeout(appChangesTimeout);
-      }
-      appChangesTimeout = setTimeout(() => {
-        if (changesWatch) {
-          changesWatch.close();
-        }
-        let isInitial = true;
-        changesWatch = watch(workingDirectory, {}).on('all', () => {
-          if (forgeChangesTimeout) {
-            clearTimeout(forgeChangesTimeout);
-          }
-          forgeChangesTimeout = setTimeout(() => {
-            if (isInitial) {
-              isInitial = false;
-            } else {
-              logger.info('Change detected in `.forge` directory...');
-            }
-            try {
-              if (forgeDeployProcess && forgeDeployProcess.exitCode === null) {
-                forgeDeployProcess.kill();
-              }
-              const command =
-                deployOptions.length > 0
-                  ? `npx forge deploy ${deployOptions.join(' ')}`
-                  : 'npx forge deploy';
-              forgeDeployProcess = exec(command, {
-                cwd: workingDirectory,
-                // stdio: 'inherit',
+    return await lastValueFrom(
+      concatCombineLatest([
+        ...buildTargets.map(
+          (buildTarget) =>
+            new Observable<{ success: boolean }>((subscriber) => {
+              const [project, target, configuration] = buildTarget.split(':');
+              runExecutor(
+                {
+                  project,
+                  target,
+                  configuration,
+                },
+                {
+                  watch: true,
+                },
+                context
+              ).then(async (results) => {
+                for await (const result of results) {
+                  if (!subscriber.closed) {
+                    if (result.success) {
+                      subscriber.next(result);
+                    } else {
+                      throw result;
+                    }
+                  }
+                }
               });
+            })
+        ),
+        new Observable((subscriber) => {
+          logger.log(
+            `Watching for Forge app changes in ${workingDirectory}...`
+          );
+          const changesWatch = watch(workingDirectory, {
+            ignoreInitial: true,
+          }).on('all', (eventName, path) => {
+            logger.log('Forge app change detected!');
+            subscriber.next({ eventName, path });
+          });
+          () => {
+            changesWatch.close();
+          };
+        }).pipe(startWith(null)),
+      ]).pipe(
+        debounceTime(1000),
+        exhaustMap(
+          () =>
+            new Observable((subscriber) => {
+              const forgeDeployProcess = exec(
+                command,
+                {
+                  cwd: workingDirectory,
+                },
+                (error) => {
+                  if (error) {
+                    subscriber.next({ success: false });
+                  } else {
+                    subscriber.next({ success: true });
+                  }
+                  subscriber.complete();
+                }
+              );
               forgeDeployProcess.stdout.pipe(process.stdout);
-            } catch (err) {
-              logger.error(err);
-              return {
-                success: false,
+              async () => {
+                // this doesn't actually work???
+                forgeDeployProcess.kill('SIGINT');
               };
-            }
-          }, 1000);
-        });
-      }, 1000);
+            })
+        ),
+        map(() => ({ success: true })),
+        catchError(() => of({ success: false })),
+        filter((res) => !res.success)
+      )
+    );
+  } else {
+    let errorMessage = `No \`buildTarget(s)\` found for project ${context.projectName}`;
+    if (context.targetName) {
+      errorMessage += ` with target ${context.targetName}`;
     }
+    if (context.configurationName) {
+      errorMessage += ` using configuration ${context.configurationName}`;
+    }
+    logger.error(errorMessage);
   }
+}
+
+function concatCombineLatest<A extends readonly unknown[]>(
+  sources: ObservableInputTuple<A>
+): Observable<A[number]> {
+  const subjects: Subject<void>[] = [];
+  return combineLatest(
+    sources.map((source, index) => {
+      subjects.push(new Subject());
+      if (index === 0) {
+        return from(source).pipe(tap(() => subjects[index].next()));
+      } else {
+        return subjects[index - 1].pipe(
+          take(1),
+          switchMap(() => from(source).pipe(tap(() => subjects[index].next())))
+        );
+      }
+    })
+  );
 }

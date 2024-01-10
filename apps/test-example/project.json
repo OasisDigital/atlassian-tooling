@@ -1,0 +1,28 @@
+{
+  "name": "test-example",
+  "$schema": "../../node_modules/nx/schemas/project-schema.json",
+  "targets": {
+    "forge-deploy": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:deploy",
+      "options": {
+        "buildTarget": "forge-example-angular:build:production"
+      }
+    },
+    "forge-deploy-watch": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:deploy-watch",
+      "options": {
+        "buildTarget": "forge-example-angular:build:production"
+      }
+    },
+    "forge-install": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:install"
+    },
+    "forge-uninstall": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:uninstall"
+    },
+    "forge-lint": {
+      "executor": "@oasisdigital/atlassian-forge-nx-plugin:lint"
+    }
+  },
+  "implicitDependencies": ["forge-example-angular"]
+}

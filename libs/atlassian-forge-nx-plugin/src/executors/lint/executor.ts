@@ -3,7 +3,7 @@ import { ExecutorContext, logger } from '@nx/devkit';
 import { LintExecutorSchema } from './schema';
 
 import { execSync } from 'child_process';
-import { join } from 'path/posix';
+import { normalize } from 'path/posix';
 
 export default async function runLintExecutor(
   options: LintExecutorSchema,
@@ -11,7 +11,7 @@ export default async function runLintExecutor(
 ) {
   const projectConfig =
     context.projectsConfigurations.projects[context.projectName];
-  const workingDirectory = join(projectConfig.root, '.forge');
+  const workingDirectory = normalize(projectConfig.root);
 
   const deployOptions: string[] = [];
   if (options.environment) {

@@ -1,6 +1,6 @@
 {
   "name": "@oasisdigital/atlassian-forge-nx-plugin",
-  "version": "0.0.12",
+  "version": "0.1.0",
   "dependencies": {
     "@nx/devkit": "16.8.1",
     "nx": "16.8.0",
