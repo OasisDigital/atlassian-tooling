@@ -32,9 +32,17 @@ In general you may run the forge commands with `npx forge` inside your nx worksp
 
 `npx nx forge-deploy {project-name}`
 
-This executor will build (production by default) your project and deploy it to the atlassian servers. If you wish to adjust the build configuration you can do so by adjusting the `buildConfig` property in the options of your `project.json`.
+This executor will build and package your frontend app(s) with the Forge app to the Atlassian servers. If you wish to adjust the build target and/or configuraiton you can do so by adjusting the `buildTarget` property in the options of your `project.json`. You can provide multiple build targets by using the `buildTargets` array property. The values for the array are still string `buildTarget` syntax values. This is needed if you have multiple apps listed in your `manifest.yml`.
 
-[Feel free to read more about the usage of the command here](https://developer.atlassian.com/platform/forge/cli-reference/deploy/)
+[Feel free to read more about the usage of the deploy command here](https://developer.atlassian.com/platform/forge/cli-reference/deploy/)
+
+### Forge Deploy Watch
+
+`npx nx forge-deploy-watch {project-name}`
+
+This executor will build and package your frontend app(s)with the Forge app to the Atlassian servers in watch mode. The frontend app(s) will have a `build:watch` run and your Forge cloud server function code will be watched for changes as well. If you wish to adjust the build target and/or configuraiton you can do so by adjusting the `buildTarget` property in the options of your `project.json`. You can provide multiple build targets by using the `buildTargets` array property. The values for the array are still string `buildTarget` syntax values. This is needed if you have multiple apps listed in your `manifest.yml`.
+
+[Feel free to read more about the usage of the deploy command here](https://developer.atlassian.com/platform/forge/cli-reference/deploy/)
 
 ### Forge Install
 
@@ -42,7 +50,7 @@ This executor will build (production by default) your project and deploy it to t
 
 This executor will install your project's forge application onto a specific site for a specific product. For example the `Jira` product on the site `****.atlassian.net`.
 
-[Feel free to read more about the usage of the command here](https://developer.atlassian.com/platform/forge/cli-reference/install/)
+[Feel free to read more about the usage of the install command here](https://developer.atlassian.com/platform/forge/cli-reference/install/)
 
 > This currently doesn't support the `list` sub-command. This will be added in the future to this executor or as a secondary `forge-install-list` executor.
 
@@ -52,7 +60,7 @@ This executor will install your project's forge application onto a specific site
 
 This executor will uninstall your project's forge application from a specific site.
 
-[Feel free to read more about the usage of the command here](https://developer.atlassian.com/platform/forge/cli-reference/uninstall/)
+[Feel free to read more about the usage of the uninstall command here](https://developer.atlassian.com/platform/forge/cli-reference/uninstall/)
 
 ### Forge Lint
 
@@ -60,4 +68,4 @@ This executor will uninstall your project's forge application from a specific si
 
 This executor will lint your forge application to make sure you are following best practices and to make sure your manifest.yml is properly setup.
 
-[Feel free to read more about the usage of the command here](https://developer.atlassian.com/platform/forge/cli-reference/lint/)
+[Feel free to read more about the usage of the lint command here](https://developer.atlassian.com/platform/forge/cli-reference/lint/)
