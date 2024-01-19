@@ -1,19 +1,23 @@
 modules:
   jira:globalPage:
-    - key: test-example-hello-world-page
+    - key: flux-hello-world-page
       resource: main
       resolver:
         function: resolver
-      title: test-example
+      title: Flux
   function:
     - key: resolver
       handler: index.handler
 resources:
   - key: main
-    path: ../../dist/apps/forge-example-angular
+    path: ../../dist/apps/forge-example-react-webpack
 app:
-  id: ari:cloud:ecosystem::app/12eef8b3-8e13-47e8-bfbe-0077f72009ad
+  id: ari:cloud:ecosystem::app/8c5c67bc-f18b-41fd-9a38-b9f638b817b8
 permissions:
+  external:
+    fetch:
+      backend:
+        - '*'
   scopes:
     - read:me
   content:

@@ -2,6 +2,20 @@
   "name": "test-example",
   "$schema": "../../node_modules/nx/schemas/project-schema.json",
   "targets": {
+    "build": {
+      "executor": "@nx/webpack:webpack",
+      "webpackConfig": "apps/text-example/webpack.config.js",
+      "options": {
+        "compiler": "tsc",
+        "main": "apps/test-example/src/index.ts",
+        "outputPath": "dist/apps/test-example",
+        "filename": "index.js",
+        "isolated": true,
+        "scripts": [],
+
+        "tsConfig": "apps/test-example/tsconfig.app.json"
+      }
+    },
     "forge-deploy": {
       "executor": "@oasisdigital/atlassian-forge-nx-plugin:deploy",
       "options": {
