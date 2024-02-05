@@ -10,30 +10,37 @@ export async function generateAtlassianConnectJson(
 ) {
   const projectRoot =
     context.projectsConfigurations.projects[context.projectName].root;
-  try {
-    const envConfig = await loadEnvVars(
-      join(projectRoot, '.env.atlassian-connect')
-    );
-    const atlassianConnectTemplate = readJsonFile(
-      join(projectRoot, 'atlassian-connect.template.json')
-    );
+  const envConfig = await loadEnvVars(
+    join(projectRoot, '.env.atlassian-connect')
+  );
+  const atlassianConnectTemplate = readJsonFile(
+    join(projectRoot, 'atlassian-connect.template.json')
+  );
 
+  const baseUrl = ngrokUrl ? ngrokUrl : envConfig.TEMPLATE_BASE_URL;
+
+  if (
+    envConfig.TEMPLATE_NAME === undefined ||
+    envConfig.TEMPLATE_DESCRIPTION === undefined ||
+    envConfig.TEMPLATE_KEY === undefined ||
+    baseUrl === undefined
+  ) {
+    console.error(
+      `Could not find \`.env.atlassian-connect\` or Node process environment variables for project: ${context.projectName}`
+    );
+    process.exit(1);
+  } else {
     const atlassianConnectFinal = {
       ...atlassianConnectTemplate,
       name: envConfig.TEMPLATE_NAME,
       description: envConfig.TEMPLATE_DESCRIPTION,
       key: envConfig.TEMPLATE_KEY,
-      baseUrl: ngrokUrl ? ngrokUrl : envConfig.TEMPLATE_BASE_URL,
+      baseUrl,
     };
 
     writeJsonFile(
       join(projectRoot, 'src', 'assets', 'atlassian-connect.json'),
       atlassianConnectFinal
     );
-  } catch {
-    console.error(
-      `Could not find \`.env.atlassian-connect\` for project: ${context.projectName}`
-    );
-    process.exit(1);
   }
 }

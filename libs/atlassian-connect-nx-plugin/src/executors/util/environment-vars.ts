@@ -1,13 +1,23 @@
 export async function loadEnvVars(path?: string) {
   if (path) {
-    const result = (await import('dotenv')).config({ path });
-    if (result.error) {
-      throw result.error;
+    try {
+      const result = (await import('dotenv')).config({ path });
+      if (result.error) {
+        throw result.error;
+      }
+      return result.parsed;
+    } catch {
+      try {
+        (await import('dotenv')).config();
+        return process.env;
+      } catch {
+        throw 'Failed to setup env variable config';
+      }
     }
-    return result.parsed;
   } else {
     try {
-      return (await import('dotenv')).config().parsed;
+      (await import('dotenv')).config();
+      return process.env;
     } catch {
       throw 'Failed to setup env variable config';
     }
